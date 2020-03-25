@@ -19,7 +19,7 @@ Korisnik unosi svoje pristupne podatke ili bira opciju Gost. Nakon toga se otvar
 Korisnik na formu za registraciju unosi svoje podatke, podatke o vozilu i parkingu. Nakon predavanja forme, vlasniku se šalje zahtjev za registraciju, koju on potom može odbiti ili prihvatiti te obavijestiti korisnika o odluci putem email-a. 
 
 ### Plaćanje
-– Korisnik bira da li želi platiti mjesečnu ili godišnju članarinu ili želi da se račun formira na osnovu vremena provedenog na parkingu. Također ima opciju da bira između tri opcije plaćanja: gotovina, kartica i PayPal. 
+Korisnik bira da li želi platiti mjesečnu ili godišnju članarinu ili želi da se račun formira na osnovu vremena provedenog na parkingu. Također ima opciju da bira između tri opcije plaćanja: gotovina, kartica i PayPal. 
 
 ### Registracija novih parkinga
 Administrator registruje nove parkinge i unosi informacije o njima (lokacija parkinga, kapacitet parkinga, cijena članarine, cijena po satu).
