@@ -37,9 +37,11 @@
 
         <div id="map"></div>
         <script>
+            //kreirnje ovog niza pravi problem!!! 
+            var parkinzi = @Html.Raw(ViewBag.Markeri);
             // Initialize and add the map
             function initMap() {
-                // The location of Sarajevo
+               // The location of Sarajevo
                 var sarajevo = { lat: 43.8563, lng: 18.4131 };
                 // The map, centered at Sarajevo
                 var map = new google.maps.Map(
@@ -48,42 +50,15 @@
                 var parkingIcon =
                 'https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png';
 
-                var parkinzi = [];
                 var infoObj = [];
-                var length = @Model.Parkinzi.Count;
-                @{
-                    int j = 0;
-                }
-                for (var i = 0; i < length; i++) {
-                    var lat = @Model.Parkinzi.ElementAt(j).Lat;
-                    var lng = @Model.Parkinzi.ElementAt(j).Long;
-                    @{
-                        //double cijenaSat = Model.Parkinzi.ElementAt(j).Cjenovnik.DnevnaCijenaSat;
-                        double cijenaSat = 1;
-                        double slobodnaMjesta = Model.Parkinzi.ElementAt(j).BrojSlobodnihMjesta;
-                        double kapacitet = Model.Parkinzi.ElementAt(j).Kapacitet;
-                        string adresa = Model.Parkinzi.ElementAt(j).Adresa;
-                        string naziv = Model.Parkinzi.ElementAt(j).Naziv;
-                        string infoProzorTekst = "Naziv: " + naziv + "\n" +
-                                                    "Adresa: " + adresa + "\n" +
-                                                    "Cijena po satu: " + cijenaSat + "KM\n" +
-                                                    "Slobodna mjesta: " + slobodnaMjesta + "/" + kapacitet;
-
-                    }
-                    var position = {
-                        LatLng: new google.maps.LatLng(lat, lng),
-                        Info: @infoProzorTekst
-                    };
-
-                    parkinzi.push(position);
-
-                    @j++;
-                }
-
                 for (var i = 0; i < parkinzi.length; i++) {
-                    var contentString = '<h3>' + parkinzi[i].Info + '</h3>';
+                    var contentString = '<h3>' + 'Naziv: ' + parkinzi[i].naziv + '</h3> ' + 
+                        '<h3>' + 'Adresa: ' + parkinzi[i].adresa + '</h3> ' + 
+                        '<h3>' + 'Cijena: ' + parkinzi[i].cijena + ' KM' + '</h3> ' +
+                        '<h3>' + 'Slobodna mjesta: ' + parkinzi[i].slobodnaMjesta + '/' + parkinzi[i].kapacitet + '</h3>';
+                    var myLatLng = new google.maps.LatLng(parkinzi[i].lat, parkinzi[i].lng);
                     const marker = new google.maps.Marker({
-                        position: parkinzi[i].LatLng,
+                        position: myLatLng,
                         icon: parkingIcon,
                         map: map
                     });
@@ -100,6 +75,7 @@
                         infoWindow.open(marker.get('map'), marker);
                         infoObj[0] = infoWindow;
                     });
+
                 }
             }
 
