@@ -57,6 +57,8 @@ namespace EParking.Controllers
             }
             markeri += "];";
             ViewBag.Markeri = markeri;
+            ViewBag.Latitude = EParkingFacade.Instance.Parkinzi.ElementAt(0).Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(0).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
             return View(EParkingFacade.Instance);
         }
     }
