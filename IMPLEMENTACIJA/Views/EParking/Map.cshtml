@@ -36,7 +36,7 @@
                 bottom: 15px;
                 right: 10px;
                 width: 185px;
-                height: 100px;
+                height: 50px;
             }
         </style>
     </head>
@@ -44,8 +44,8 @@
 
         <div id="map"></div>
         <script>
-            //kreirnje ovog niza pravi problem!!!
             var parkinzi = @Html.Raw(ViewBag.Markeri);
+            var najbliziParking = @Html.Raw(ViewBag.NajbliziParking);
             var map;
             // Initialize and add the map
             function initMap() {
@@ -89,15 +89,43 @@
             }
 
             function calculateAndShowRoute() {
+                parkinzi = @Html.Raw(ViewBag.Markeri);
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
                         window.directionsService = new google.maps.DirectionsService();
                         window.directionsDisplay = new google.maps.DirectionsRenderer();
-                        var request = {
-                            origin: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                            destination: new google.maps.LatLng(@Html.Raw(ViewBag.Latitude), @Html.Raw(ViewBag.Longitude)),
-                            travelMode: 'DRIVING'
+
+                        var najbliziLat, najbliziLong, request, brojac = 0;
+                        if (najbliziParking == 'true') {
+                            najbliziLat = parkinzi[0].lat;
+                            najbliziLong = parkinzi[0].lng;
+                            var minDistance = distanceBetween(position.coords.latitude, position.coords.longitude, najbliziLat, najbliziLong);
+                            for (var i = 1; i < parkinzi.length; i++) {
+                                var nthMinDistance = distanceBetween(position.coords.latitude, position.coords.longitude, parkinzi[i].lat, parkinzi[i].lng);
+                                if (nthMinDistance < minDistance && parkinzi[i].slobodnaMjesta > 0) {
+                                    minDistance = nthMinDistance;
+                                    najbliziLat = parkinzi[i].lat;
+                                    najbliziLong = parkinzi[i].lng;
+                                    brojac++;
+                                }
+                            }
+                            if (brojac == 0 && parkinzi[0].slobodnaMjesta == 0) {
+                                swal("Nema slobodnih mjesta", "Trenutno su svi parkinzi popunjeni do svog maksimalnog kapaciteta. Molimo pričekajte slobodno mjesto i osvježavajte stranicu.");
+                            } else {
+                                request = {
+                                    origin: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                                    destination: new google.maps.LatLng(najbliziLat, najbliziLong),
+                                    travelMode: 'DRIVING'
+                                }
+                            }
+                        } else {
+                            request = {
+                                origin: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                                destination: new google.maps.LatLng(@Html.Raw(ViewBag.Latitude), @Html.Raw(ViewBag.Longitude)),
+                                travelMode: 'DRIVING'
+                            }
                         }
+
                         directionsDisplay.setMap(map);
                         directionsService.route(request, (result, status) => {
                             if (status == 'OK') {
@@ -114,6 +142,17 @@
                 window.directionsDisplay.setDirections({ routes: [] });
             }
 
+            function distanceBetween(lat1, lon1, lat2, lon2) {
+                const R = 6371e3;
+                const fi1 = lat1 * Math.PI / 180;
+                const fi2 = lat2 * Math.PI / 180;
+                const deltaFi = (lat2 - lat1) * Math.PI / 180;
+                const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+                const x = deltaLambda * Math.cos((fi1 + fi2) / 2);
+                const y = deltaFi;
+                return Math.sqrt(x * x + y * y) * R;
+            }
+
         </script>
 
 
@@ -127,7 +166,7 @@
         </script>
 
 
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
