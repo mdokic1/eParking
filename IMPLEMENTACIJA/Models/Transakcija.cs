@@ -16,9 +16,13 @@ namespace EParking.Models
         public DateTime VrijemeOdlaska { get; set; }
         [Required]
         public double Iznos { get; set; }
-        [Required]
+       
+        public int ParkingLokacijaId { get; set; }
+        
         public virtual ParkingLokacija ParkingLokacija { get; set; }
-        [Required]
+        
+        public int VoziloId { get; set; }
+        
         public virtual Vozilo Vozilo { get; set; }
     }
 }

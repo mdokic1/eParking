@@ -19,7 +19,7 @@ namespace EParking.Models
         [Required]
         public double Prihodi { get; set; }
         public virtual ICollection<Zahtjev> Zahtjevi { get; set; }
-        [Required]
-        public virtual ParkingLokacija ParkingLokacija { get; set; }
+        
+      
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EParking.Migrations
+namespace EParkingOOAD.Migrations
 {
-    public partial class Izmjena1 : Migration
+    public partial class Izmjena3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -97,14 +97,14 @@ namespace EParking.Migrations
                     BrojTablice = table.Column<string>(nullable: false),
                     BrojSasije = table.Column<string>(nullable: false),
                     BrojMotora = table.Column<string>(nullable: false),
-                    KorisnikID = table.Column<int>(nullable: false)
+                    KorisnikId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vozilo", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Vozilo_Korisnik_KorisnikID",
-                        column: x => x.KorisnikID,
+                        name: "FK_Vozilo_Korisnik_KorisnikId",
+                        column: x => x.KorisnikId,
                         principalTable: "Korisnik",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -120,14 +120,14 @@ namespace EParking.Migrations
                     Password = table.Column<string>(nullable: false),
                     ImePrezime = table.Column<string>(nullable: false),
                     Prihodi = table.Column<double>(nullable: false),
-                    ParkingLokacijaID = table.Column<int>(nullable: false)
+                    ParkingLokacijaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vlasnik", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Vlasnik_ParkingLokacija_ParkingLokacijaID",
-                        column: x => x.ParkingLokacijaID,
+                        name: "FK_Vlasnik_ParkingLokacija_ParkingLokacijaId",
+                        column: x => x.ParkingLokacijaId,
                         principalTable: "ParkingLokacija",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -142,21 +142,21 @@ namespace EParking.Migrations
                     VrijemeDolaska = table.Column<DateTime>(nullable: false),
                     VrijemeOdlaska = table.Column<DateTime>(nullable: false),
                     Iznos = table.Column<double>(nullable: false),
-                    ParkingLokacijaID = table.Column<int>(nullable: false),
-                    VoziloID = table.Column<int>(nullable: false)
+                    ParkingLokacijaId = table.Column<int>(nullable: false),
+                    VoziloId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transakcija", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Transakcija_ParkingLokacija_ParkingLokacijaID",
-                        column: x => x.ParkingLokacijaID,
+                        name: "FK_Transakcija_ParkingLokacija_ParkingLokacijaId",
+                        column: x => x.ParkingLokacijaId,
                         principalTable: "ParkingLokacija",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transakcija_Vozilo_VoziloID",
-                        column: x => x.VoziloID,
+                        name: "FK_Transakcija_Vozilo_VoziloId",
+                        column: x => x.VoziloId,
                         principalTable: "Vozilo",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -168,21 +168,21 @@ namespace EParking.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VoziloID = table.Column<int>(nullable: false),
-                    VlasnikID = table.Column<int>(nullable: false)
+                    VoziloId = table.Column<int>(nullable: false),
+                    VlasnikId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Zahtjev", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Zahtjev_Vlasnik_VlasnikID",
-                        column: x => x.VlasnikID,
+                        name: "FK_Zahtjev_Vlasnik_VlasnikId",
+                        column: x => x.VlasnikId,
                         principalTable: "Vlasnik",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Zahtjev_Vozilo_VoziloID",
-                        column: x => x.VoziloID,
+                        name: "FK_Zahtjev_Vozilo_VoziloId",
+                        column: x => x.VoziloId,
                         principalTable: "Vozilo",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -194,34 +194,34 @@ namespace EParking.Migrations
                 column: "CjenovnikId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transakcija_ParkingLokacijaID",
+                name: "IX_Transakcija_ParkingLokacijaId",
                 table: "Transakcija",
-                column: "ParkingLokacijaID");
+                column: "ParkingLokacijaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transakcija_VoziloID",
+                name: "IX_Transakcija_VoziloId",
                 table: "Transakcija",
-                column: "VoziloID");
+                column: "VoziloId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vlasnik_ParkingLokacijaID",
+                name: "IX_Vlasnik_ParkingLokacijaId",
                 table: "Vlasnik",
-                column: "ParkingLokacijaID");
+                column: "ParkingLokacijaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vozilo_KorisnikID",
+                name: "IX_Vozilo_KorisnikId",
                 table: "Vozilo",
-                column: "KorisnikID");
+                column: "KorisnikId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Zahtjev_VlasnikID",
+                name: "IX_Zahtjev_VlasnikId",
                 table: "Zahtjev",
-                column: "VlasnikID");
+                column: "VlasnikId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Zahtjev_VoziloID",
+                name: "IX_Zahtjev_VoziloId",
                 table: "Zahtjev",
-                column: "VoziloID");
+                column: "VoziloId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -9,10 +9,13 @@ namespace EParking.Models
     public class Clan: Korisnik
     {
         [Required]
+        [Display(Name = "Choose parking spot")]
         public int RezervisanoParkingMjesto { get; set; }
         [Required]
+        [Display(Name = "Status")]
         public StatusClanarine StatusClanarine { get; set; }
         [Required]
+        [Display(Name = "Type of membership")]
         public TipClanarine TipClanarine { get; set; }
     }
 }

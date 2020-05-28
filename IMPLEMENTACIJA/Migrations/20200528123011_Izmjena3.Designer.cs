@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EParking.Migrations
+namespace EParkingOOAD.Migrations
 {
     [DbContext(typeof(EParkingContext))]
-    [Migration("20200525185528_Izmjena1")]
-    partial class Izmjena1
+    [Migration("20200528123011_Izmjena3")]
+    partial class Izmjena3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,10 +165,10 @@ namespace EParking.Migrations
                     b.Property<double>("Iznos")
                         .HasColumnType("float");
 
-                    b.Property<int>("ParkingLokacijaID")
+                    b.Property<int>("ParkingLokacijaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VoziloID")
+                    b.Property<int>("VoziloId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("VrijemeDolaska")
@@ -179,9 +179,9 @@ namespace EParking.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ParkingLokacijaID");
+                    b.HasIndex("ParkingLokacijaId");
 
-                    b.HasIndex("VoziloID");
+                    b.HasIndex("VoziloId");
 
                     b.ToTable("Transakcija");
                 });
@@ -197,7 +197,7 @@ namespace EParking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParkingLokacijaID")
+                    b.Property<int>("ParkingLokacijaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
@@ -213,7 +213,7 @@ namespace EParking.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ParkingLokacijaID");
+                    b.HasIndex("ParkingLokacijaId");
 
                     b.ToTable("Vlasnik");
                 });
@@ -237,7 +237,7 @@ namespace EParking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("KorisnikID")
+                    b.Property<int>("KorisnikId")
                         .HasColumnType("int");
 
                     b.Property<string>("ModelAuta")
@@ -246,7 +246,7 @@ namespace EParking.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("KorisnikID");
+                    b.HasIndex("KorisnikId");
 
                     b.ToTable("Vozilo");
                 });
@@ -258,17 +258,17 @@ namespace EParking.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("VlasnikID")
+                    b.Property<int>("VlasnikId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VoziloID")
+                    b.Property<int>("VoziloId")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("VlasnikID");
+                    b.HasIndex("VlasnikId");
 
-                    b.HasIndex("VoziloID");
+                    b.HasIndex("VoziloId");
 
                     b.ToTable("Zahtjev");
                 });
@@ -309,13 +309,13 @@ namespace EParking.Migrations
                 {
                     b.HasOne("EParking.Models.ParkingLokacija", "ParkingLokacija")
                         .WithMany()
-                        .HasForeignKey("ParkingLokacijaID")
+                        .HasForeignKey("ParkingLokacijaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EParking.Models.Vozilo", "Vozilo")
                         .WithMany()
-                        .HasForeignKey("VoziloID")
+                        .HasForeignKey("VoziloId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -324,7 +324,7 @@ namespace EParking.Migrations
                 {
                     b.HasOne("EParking.Models.ParkingLokacija", "ParkingLokacija")
                         .WithMany()
-                        .HasForeignKey("ParkingLokacijaID")
+                        .HasForeignKey("ParkingLokacijaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -333,7 +333,7 @@ namespace EParking.Migrations
                 {
                     b.HasOne("EParking.Models.Korisnik", "Korisnik")
                         .WithMany()
-                        .HasForeignKey("KorisnikID")
+                        .HasForeignKey("KorisnikId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -342,13 +342,13 @@ namespace EParking.Migrations
                 {
                     b.HasOne("EParking.Models.Vlasnik", "Vlasnik")
                         .WithMany("Zahtjevi")
-                        .HasForeignKey("VlasnikID")
+                        .HasForeignKey("VlasnikId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EParking.Models.Vozilo", "Vozilo")
                         .WithMany()
-                        .HasForeignKey("VoziloID")
+                        .HasForeignKey("VoziloId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

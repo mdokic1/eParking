@@ -22,6 +22,8 @@ namespace EParking.Models
         public DbSet<Clan> Clan { get; set; }
         public DbSet<Gost> Gost { get; set; }
 
+        public DbSet<Korisnik> Korisnik { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Administrator>().ToTable("Administrator");
@@ -31,6 +33,7 @@ namespace EParking.Models
             modelBuilder.Entity<Cjenovnik>().ToTable("Cjenovnik");
             modelBuilder.Entity<Vozilo>().ToTable("Vozilo");
             modelBuilder.Entity<Zahtjev>().ToTable("Zahtjev");
+            modelBuilder.Entity<Korisnik>().ToTable("Korisnik");
         }
 
     }
