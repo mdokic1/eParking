@@ -22,5 +22,8 @@ namespace EParking.Models
         public int BrojSlobodnihMjesta { get; set; }
         public int CjenovnikId { get; set; }
         public virtual Cjenovnik Cjenovnik { get; set; }
+
+        public int VlasnikId { get; set; }
+        public virtual Vlasnik Vlasnik { get; set; }
     }
 }
