@@ -57,6 +57,13 @@ namespace EParking.Controllers
             }
             markeri += "];";
             ViewBag.Markeri = markeri;
+            //JOS FALI DA NAMJESTIS UKOLIKO JE KORISNIK KOJI KLIKA CLAN DA PRIKAZE NJEGOV PARKING
+            //A UKOLIKO JE GOST DA PRIKAZE NAJBLIZI PARKING OD NJEGOVE TRENUTNE LOKACIJE
+            //true -- najblizi parking
+            //false -- rezrvisani parking
+            ViewBag.NajbliziParking = "'true';";
+            ViewBag.Latitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
             return View(EParkingFacade.Instance);
         }
     }
