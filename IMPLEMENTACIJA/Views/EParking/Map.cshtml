@@ -38,6 +38,13 @@
                 width: 185px;
                 height: 50px;
             }
+            #btnUlazak {
+                position: absolute;
+                top: 230px;
+                right: 10px;
+                width: 185px;
+                height: 100px;
+            }
         </style>
     </head>
     <body>
@@ -46,6 +53,7 @@
         <script>
             var parkinzi = @Html.Raw(ViewBag.Markeri);
             var najbliziParking = @Html.Raw(ViewBag.NajbliziParking);
+            var odredisniLat, odredisniLon;
             var map;
             // Initialize and add the map
             function initMap() {
@@ -85,7 +93,7 @@
                     });
 
                 }
-
+                document.getElementById("btnUlazak").disabled = true;
             }
 
             function calculateAndShowRoute() {
@@ -99,13 +107,16 @@
                         if (najbliziParking == 'true') {
                             najbliziLat = parkinzi[0].lat;
                             najbliziLong = parkinzi[0].lng;
+                            minBrojSlobodnih = parkinzi[0].slobodnaMjesta;
                             var minDistance = distanceBetween(position.coords.latitude, position.coords.longitude, najbliziLat, najbliziLong);
                             for (var i = 1; i < parkinzi.length; i++) {
                                 var nthMinDistance = distanceBetween(position.coords.latitude, position.coords.longitude, parkinzi[i].lat, parkinzi[i].lng);
-                                if (nthMinDistance < minDistance && parkinzi[i].slobodnaMjesta > 0) {
+                                if ((nthMinDistance < minDistance && parkinzi[i].slobodnaMjesta > 0) ||
+                                    (nthMinDistance > minDistance && minBrojSlobodnih == 0 && parkinzi[i].slobodnaMjesta > 0)) {
                                     minDistance = nthMinDistance;
                                     najbliziLat = parkinzi[i].lat;
                                     najbliziLong = parkinzi[i].lng;
+                                    minBrojSlobodnih = parkinzi[i].slobodnaMjesta;
                                     brojac++;
                                 }
                             }
@@ -117,6 +128,8 @@
                                     destination: new google.maps.LatLng(najbliziLat, najbliziLong),
                                     travelMode: 'DRIVING'
                                 }
+                                odredisniLat = najbliziLat;
+                                odredisniLon = najbliziLong;
                             }
                         } else {
                             request = {
@@ -124,6 +137,8 @@
                                 destination: new google.maps.LatLng(@Html.Raw(ViewBag.Latitude), @Html.Raw(ViewBag.Longitude)),
                                 travelMode: 'DRIVING'
                             }
+                            odredisnilat = @Html.Raw(ViewBag.Latitude);
+                            odredisnilon = @Html.Raw(ViewBag.Longitude);
                         }
 
                         directionsDisplay.setMap(map);
@@ -133,6 +148,8 @@
                             }
                         });
 
+                        document.getElementById("btnUlazak").disabled = false;
+
                     });
                 }
 
@@ -140,6 +157,7 @@
 
             function removeRoute() {
                 window.directionsDisplay.setDirections({ routes: [] });
+                document.getElementById("btnUlazak").disabled = true;
             }
 
             function distanceBetween(lat1, lon1, lat2, lon2) {
@@ -153,12 +171,31 @@
                 return Math.sqrt(x * x + y * y) * R;
             }
 
+
+
+
+
         </script>
+
+
 
 
         <button id="btnPay" type="button" class="btn btn-primary btn-lg">Pay</button>
         <button id="btnRoute" type="button" class="btn btn-primary btn-lg" onclick="calculateAndShowRoute()">Find route</button>
         <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">Clear route</button>
+        <input id="btnUlazak" type="submit" class="btn btn-danger btn-lg" value="Registruj ulazak na parking" />
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#btnUlazak').click(function () {
+                    $.post("/EParking/SpasiKoordinate", {
+                        lat: odredisniLat,
+                        lon: odredisniLon
+                    });
+                });
+            });
+        </script>
 
 
         <script async defer
