@@ -96,6 +96,7 @@ namespace EParkingOOAD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Naziv,Adresa,Lat,Long,Kapacitet,BrojSlobodnihMjesta,CjenovnikId,VlasnikId")] ParkingLokacija parkingLokacija)
         {
+            parkingLokacija.ID = id;
             if (id != parkingLokacija.ID)
             {
                 return NotFound();

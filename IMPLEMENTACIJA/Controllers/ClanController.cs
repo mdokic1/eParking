@@ -60,10 +60,15 @@ namespace EParkingOOAD.Controllers
             {
                 clan.StatusClanarine = StatusClanarine.INACTIVE;
                 _context.Add(clan);
+                
+                
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
+                TempData["mydata"] = Newtonsoft.Json.JsonConvert.SerializeObject(clan);
+                return RedirectToAction("Create", "Vozilo");
+
             }
             ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
+            
             return View(clan);
         }
 

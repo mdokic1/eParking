@@ -47,7 +47,7 @@ namespace EParkingOOAD.Controllers
         // GET: Vozilo/Create
         public IActionResult Create()
         {
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime");
+            //ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime");
             return View();
         }
 
@@ -60,11 +60,27 @@ namespace EParkingOOAD.Controllers
         {
             if (ModelState.IsValid)
             {
+                Clan data = Newtonsoft.Json.JsonConvert.DeserializeObject<Clan>((string)TempData["mydata"]);
+                vozilo.KorisnikId = data.ID;
+                
                 _context.Add(vozilo);
+
                 await _context.SaveChangesAsync();
+                TempData["vozilo"] = Newtonsoft.Json.JsonConvert.SerializeObject(vozilo);
+                List<ParkingLokacija> ParkingLokacije = _context.ParkingLokacija.ToList();
+                Vlasnik vlasnik = new Vlasnik();
+                foreach (var p in ParkingLokacije)
+                {
+                    if(p.ID == data.RezervisanoParkingMjesto)
+                    {
+                        vlasnik.ID = p.VlasnikId;
+                    }
+                }
+                TempData["vlasnik"] = Newtonsoft.Json.JsonConvert.SerializeObject(vlasnik);
+                return RedirectToAction("Create", "Zahtjev");
                 //return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
+            //ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
             return View(vozilo);
         }
 
@@ -81,7 +97,7 @@ namespace EParkingOOAD.Controllers
             {
                 return NotFound();
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
+            //ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
             return View(vozilo);
         }
 
@@ -117,7 +133,7 @@ namespace EParkingOOAD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
+            //ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
             return View(vozilo);
         }
 

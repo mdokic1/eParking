@@ -20,12 +20,12 @@ namespace EParking.Models
         [Display(Name = "Chassis number")]
         public string BrojSasije { get; set; }
         [Required]
+                
         [Display(Name = "Engine number")]
         public string BrojMotora { get; set; }
         [Required]
         [Display(Name = "Name")]
-
-
+        //[Compare(Korisnik.ImePrezime)]
         public int KorisnikId { get; set; }
         public virtual Korisnik Korisnik { get; set; }
     }

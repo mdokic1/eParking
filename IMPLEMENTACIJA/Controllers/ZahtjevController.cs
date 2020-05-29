@@ -48,8 +48,8 @@ namespace EParkingOOAD.Controllers
         // GET: Zahtjev/Create
         public IActionResult Create()
         {
-            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime");
-            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora");
+            //ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime");
+            //ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora");
             return View();
         }
 
@@ -62,12 +62,17 @@ namespace EParkingOOAD.Controllers
         {
             if (ModelState.IsValid)
             {
+                Vozilo voziloData = Newtonsoft.Json.JsonConvert.DeserializeObject<Vozilo>((string)TempData["vozilo"]);
+                Vlasnik vlasnikData = Newtonsoft.Json.JsonConvert.DeserializeObject<Vlasnik>((string)TempData["vlasnik"]);
+
+                zahtjev.VlasnikId = vlasnikData.ID;
+                zahtjev.VoziloId = voziloData.ID;
                 _context.Add(zahtjev);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
             }
-            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
-            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+            //ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
+            //ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
             return View(zahtjev);
         }
 
@@ -84,8 +89,8 @@ namespace EParkingOOAD.Controllers
             {
                 return NotFound();
             }
-            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
-            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+           // ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
+            //ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
             return View(zahtjev);
         }
 
@@ -121,8 +126,8 @@ namespace EParkingOOAD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
-            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+            //ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
+           // ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
             return View(zahtjev);
         }
 
