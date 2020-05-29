@@ -1,4 +1,4 @@
-﻿@model ParkingLokacija
+﻿@model EParking.Models.ParkingLokacija
 
 @{
     ViewData["Title"] = "Create";
@@ -47,6 +47,10 @@
                 <select asp-for="CjenovnikId" class ="form-control" asp-items="ViewBag.CjenovnikId"></select>
             </div>
             <div class="form-group">
+                <label asp-for="VlasnikId" class="control-label"></label>
+                <select asp-for="VlasnikId" class ="form-control" asp-items="ViewBag.VlasnikId"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -57,3 +61,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

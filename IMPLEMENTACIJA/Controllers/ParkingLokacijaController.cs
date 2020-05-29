@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EParking.Models;
 
-namespace EParking.Controllers
+namespace EParkingOOAD.Controllers
 {
     public class ParkingLokacijaController : Controller
     {
@@ -21,7 +21,7 @@ namespace EParking.Controllers
         // GET: ParkingLokacija
         public async Task<IActionResult> Index()
         {
-            var eParkingContext = _context.ParkingLokacija.Include(p => p.Cjenovnik);
+            var eParkingContext = _context.ParkingLokacija.Include(p => p.Cjenovnik).Include(p => p.Vlasnik);
             return View(await eParkingContext.ToListAsync());
         }
 
@@ -33,10 +33,9 @@ namespace EParking.Controllers
                 return NotFound();
             }
 
-            //id -= 1;
-
             var parkingLokacija = await _context.ParkingLokacija
                 .Include(p => p.Cjenovnik)
+                .Include(p => p.Vlasnik)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (parkingLokacija == null)
             {
@@ -50,6 +49,7 @@ namespace EParking.Controllers
         public IActionResult Create()
         {
             ViewData["CjenovnikId"] = new SelectList(_context.Cjenovnik, "ID", "Naziv");
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace EParking.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Naziv,Adresa,Lat,Long,Kapacitet,BrojSlobodnihMjesta,CjenovnikId")] ParkingLokacija parkingLokacija)
+        public async Task<IActionResult> Create([Bind("Naziv,Adresa,Lat,Long,Kapacitet,BrojSlobodnihMjesta,CjenovnikId,VlasnikId")] ParkingLokacija parkingLokacija)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +67,7 @@ namespace EParking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CjenovnikId"] = new SelectList(_context.Cjenovnik, "ID", "Naziv", parkingLokacija.CjenovnikId);
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", parkingLokacija.VlasnikId);
             return View(parkingLokacija);
         }
 
@@ -78,14 +79,13 @@ namespace EParking.Controllers
                 return NotFound();
             }
 
-            //id -= 1;
-
             var parkingLokacija = await _context.ParkingLokacija.FindAsync(id);
             if (parkingLokacija == null)
             {
                 return NotFound();
             }
             ViewData["CjenovnikId"] = new SelectList(_context.Cjenovnik, "ID", "Naziv", parkingLokacija.CjenovnikId);
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", parkingLokacija.VlasnikId);
             return View(parkingLokacija);
         }
 
@@ -94,16 +94,12 @@ namespace EParking.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Naziv,Adresa,Lat,Long,Kapacitet,BrojSlobodnihMjesta,CjenovnikId")] ParkingLokacija parkingLokacija)
+        public async Task<IActionResult> Edit(int id, [Bind("Naziv,Adresa,Lat,Long,Kapacitet,BrojSlobodnihMjesta,CjenovnikId,VlasnikId")] ParkingLokacija parkingLokacija)
         {
-            //dodano jer nije radio edit
-            parkingLokacija.ID = id;
             if (id != parkingLokacija.ID)
             {
                 return NotFound();
             }
-
-            //id -= 1;
 
             if (ModelState.IsValid)
             {
@@ -126,6 +122,7 @@ namespace EParking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CjenovnikId"] = new SelectList(_context.Cjenovnik, "ID", "Naziv", parkingLokacija.CjenovnikId);
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", parkingLokacija.VlasnikId);
             return View(parkingLokacija);
         }
 
@@ -137,10 +134,9 @@ namespace EParking.Controllers
                 return NotFound();
             }
 
-            //id -= 1;
-
             var parkingLokacija = await _context.ParkingLokacija
                 .Include(p => p.Cjenovnik)
+                .Include(p => p.Vlasnik)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (parkingLokacija == null)
             {
@@ -155,7 +151,6 @@ namespace EParking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //id -= 1;
             var parkingLokacija = await _context.ParkingLokacija.FindAsync(id);
             _context.ParkingLokacija.Remove(parkingLokacija);
             await _context.SaveChangesAsync();
@@ -164,7 +159,6 @@ namespace EParking.Controllers
 
         private bool ParkingLokacijaExists(int id)
         {
-            //id -= 1;
             return _context.ParkingLokacija.Any(e => e.ID == id);
         }
     }

@@ -15,7 +15,7 @@ namespace EParking.Models
         [Display(Name = "Status")]
         public StatusClanarine StatusClanarine { get; set; }
         [Required]
-        [Display(Name = "Type of membership")]
+        [Display(Name = "Type of membership(MJESECNA/GODISNJA)")]
         public TipClanarine TipClanarine { get; set; }
     }
 }

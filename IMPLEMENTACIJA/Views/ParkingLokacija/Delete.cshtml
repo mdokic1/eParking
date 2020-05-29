@@ -1,4 +1,4 @@
-﻿@model ParkingLokacija
+﻿@model EParking.Models.ParkingLokacija
 
 @{
     ViewData["Title"] = "Delete";
@@ -52,6 +52,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Cjenovnik.Naziv)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vlasnik)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vlasnik.ImePrezime)
         </dd class>
     </dl>
     

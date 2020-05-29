@@ -9,23 +9,22 @@ using EParking.Models;
 
 namespace EParkingOOAD.Controllers
 {
-    public class VoziloController : Controller
+    public class VlasnikController : Controller
     {
         private readonly EParkingContext _context;
 
-        public VoziloController(EParkingContext context)
+        public VlasnikController(EParkingContext context)
         {
             _context = context;
         }
 
-        // GET: Vozilo
+        // GET: Vlasnik
         public async Task<IActionResult> Index()
         {
-            var eParkingContext = _context.Vozilo.Include(v => v.Korisnik);
-            return View(await eParkingContext.ToListAsync());
+            return View(await _context.Vlasnik.ToListAsync());
         }
 
-        // GET: Vozilo/Details/5
+        // GET: Vlasnik/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +32,39 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            var vozilo = await _context.Vozilo
-                .Include(v => v.Korisnik)
+            var vlasnik = await _context.Vlasnik
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (vozilo == null)
+            if (vlasnik == null)
             {
                 return NotFound();
             }
 
-            return View(vozilo);
+            return View(vlasnik);
         }
 
-        // GET: Vozilo/Create
+        // GET: Vlasnik/Create
         public IActionResult Create()
         {
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime");
             return View();
         }
 
-        // POST: Vozilo/Create
+        // POST: Vlasnik/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Vozilo vozilo)
+        public async Task<IActionResult> Create([Bind("Username,Password,ImePrezime,Prihodi")] Vlasnik vlasnik)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vozilo);
+                _context.Add(vlasnik);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
-            return View(vozilo);
+            return View(vlasnik);
         }
 
-        // GET: Vozilo/Edit/5
+        // GET: Vlasnik/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +72,22 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            var vozilo = await _context.Vozilo.FindAsync(id);
-            if (vozilo == null)
+            var vlasnik = await _context.Vlasnik.FindAsync(id);
+            if (vlasnik == null)
             {
                 return NotFound();
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
-            return View(vozilo);
+            return View(vlasnik);
         }
 
-        // POST: Vozilo/Edit/5
+        // POST: Vlasnik/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ModelAuta,BrojTablice,BrojSasije,BrojMotora,KorisnikId")] Vozilo vozilo)
+        public async Task<IActionResult> Edit(int id, [Bind("Username,Password,ImePrezime,Prihodi")] Vlasnik vlasnik)
         {
-            if (id != vozilo.ID)
+            if (id != vlasnik.ID)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace EParkingOOAD.Controllers
             {
                 try
                 {
-                    _context.Update(vozilo);
+                    _context.Update(vlasnik);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VoziloExists(vozilo.ID))
+                    if (!VlasnikExists(vlasnik.ID))
                     {
                         return NotFound();
                     }
@@ -117,11 +112,10 @@ namespace EParkingOOAD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
-            return View(vozilo);
+            return View(vlasnik);
         }
 
-        // GET: Vozilo/Delete/5
+        // GET: Vlasnik/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +123,30 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            var vozilo = await _context.Vozilo
-                .Include(v => v.Korisnik)
+            var vlasnik = await _context.Vlasnik
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (vozilo == null)
+            if (vlasnik == null)
             {
                 return NotFound();
             }
 
-            return View(vozilo);
+            return View(vlasnik);
         }
 
-        // POST: Vozilo/Delete/5
+        // POST: Vlasnik/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var vozilo = await _context.Vozilo.FindAsync(id);
-            _context.Vozilo.Remove(vozilo);
+            var vlasnik = await _context.Vlasnik.FindAsync(id);
+            _context.Vlasnik.Remove(vlasnik);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VoziloExists(int id)
+        private bool VlasnikExists(int id)
         {
-            return _context.Vozilo.Any(e => e.ID == id);
+            return _context.Vlasnik.Any(e => e.ID == id);
         }
     }
 }

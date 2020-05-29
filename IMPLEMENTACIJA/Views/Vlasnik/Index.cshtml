@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EParking.Models.Vozilo>
+﻿@model IEnumerable<EParking.Models.Vlasnik>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ModelAuta)
+                @Html.DisplayNameFor(model => model.Username)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BrojTablice)
+                @Html.DisplayNameFor(model => model.Password)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BrojSasije)
+                @Html.DisplayNameFor(model => model.ImePrezime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BrojMotora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Korisnik)
+                @Html.DisplayNameFor(model => model.Prihodi)
             </th>
             <th></th>
         </tr>
@@ -34,19 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ModelAuta)
+                @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BrojTablice)
+                @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BrojSasije)
+                @Html.DisplayFor(modelItem => item.ImePrezime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BrojMotora)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Korisnik.ImePrezime)
+                @Html.DisplayFor(modelItem => item.Prihodi)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

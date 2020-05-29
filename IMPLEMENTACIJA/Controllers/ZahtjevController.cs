@@ -9,23 +9,23 @@ using EParking.Models;
 
 namespace EParkingOOAD.Controllers
 {
-    public class VoziloController : Controller
+    public class ZahtjevController : Controller
     {
         private readonly EParkingContext _context;
 
-        public VoziloController(EParkingContext context)
+        public ZahtjevController(EParkingContext context)
         {
             _context = context;
         }
 
-        // GET: Vozilo
+        // GET: Zahtjev
         public async Task<IActionResult> Index()
         {
-            var eParkingContext = _context.Vozilo.Include(v => v.Korisnik);
+            var eParkingContext = _context.Zahtjev.Include(z => z.Vlasnik).Include(z => z.Vozilo);
             return View(await eParkingContext.ToListAsync());
         }
 
-        // GET: Vozilo/Details/5
+        // GET: Zahtjev/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,45 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            var vozilo = await _context.Vozilo
-                .Include(v => v.Korisnik)
+            var zahtjev = await _context.Zahtjev
+                .Include(z => z.Vlasnik)
+                .Include(z => z.Vozilo)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (vozilo == null)
+            if (zahtjev == null)
             {
                 return NotFound();
             }
 
-            return View(vozilo);
+            return View(zahtjev);
         }
 
-        // GET: Vozilo/Create
+        // GET: Zahtjev/Create
         public IActionResult Create()
         {
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime");
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime");
+            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora");
             return View();
         }
 
-        // POST: Vozilo/Create
+        // POST: Zahtjev/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Vozilo vozilo)
+        public async Task<IActionResult> Create([Bind("VoziloId,VlasnikId")] Zahtjev zahtjev)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vozilo);
+                _context.Add(zahtjev);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
-            return View(vozilo);
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
+            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+            return View(zahtjev);
         }
 
-        // GET: Vozilo/Edit/5
+        // GET: Zahtjev/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +79,24 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            var vozilo = await _context.Vozilo.FindAsync(id);
-            if (vozilo == null)
+            var zahtjev = await _context.Zahtjev.FindAsync(id);
+            if (zahtjev == null)
             {
                 return NotFound();
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
-            return View(vozilo);
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
+            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+            return View(zahtjev);
         }
 
-        // POST: Vozilo/Edit/5
+        // POST: Zahtjev/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ModelAuta,BrojTablice,BrojSasije,BrojMotora,KorisnikId")] Vozilo vozilo)
+        public async Task<IActionResult> Edit(int id, [Bind("VoziloId,VlasnikId")] Zahtjev zahtjev)
         {
-            if (id != vozilo.ID)
+            if (id != zahtjev.ID)
             {
                 return NotFound();
             }
@@ -101,12 +105,12 @@ namespace EParkingOOAD.Controllers
             {
                 try
                 {
-                    _context.Update(vozilo);
+                    _context.Update(zahtjev);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VoziloExists(vozilo.ID))
+                    if (!ZahtjevExists(zahtjev.ID))
                     {
                         return NotFound();
                     }
@@ -117,11 +121,12 @@ namespace EParkingOOAD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
-            return View(vozilo);
+            ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
+            ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+            return View(zahtjev);
         }
 
-        // GET: Vozilo/Delete/5
+        // GET: Zahtjev/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +134,32 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            var vozilo = await _context.Vozilo
-                .Include(v => v.Korisnik)
+            var zahtjev = await _context.Zahtjev
+                .Include(z => z.Vlasnik)
+                .Include(z => z.Vozilo)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (vozilo == null)
+            if (zahtjev == null)
             {
                 return NotFound();
             }
 
-            return View(vozilo);
+            return View(zahtjev);
         }
 
-        // POST: Vozilo/Delete/5
+        // POST: Zahtjev/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var vozilo = await _context.Vozilo.FindAsync(id);
-            _context.Vozilo.Remove(vozilo);
+            var zahtjev = await _context.Zahtjev.FindAsync(id);
+            _context.Zahtjev.Remove(zahtjev);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VoziloExists(int id)
+        private bool ZahtjevExists(int id)
         {
-            return _context.Vozilo.Any(e => e.ID == id);
+            return _context.Zahtjev.Any(e => e.ID == id);
         }
     }
 }

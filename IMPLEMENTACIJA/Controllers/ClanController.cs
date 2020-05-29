@@ -45,6 +45,7 @@ namespace EParkingOOAD.Controllers
         // GET: Clan/Create
         public IActionResult Create()
         {
+            ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv");
             return View();
         }
 
@@ -53,14 +54,16 @@ namespace EParkingOOAD.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RezervisanoParkingMjesto,StatusClanarine,TipClanarine,ImePrezime,Username,Password,JMBG,Adresa,BrojMobitela,Email")] Clan clan)
+        public async Task<IActionResult> Create(Clan clan)
         {
             if (ModelState.IsValid)
             {
+                clan.StatusClanarine = StatusClanarine.INACTIVE;
                 _context.Add(clan);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
             }
+            ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
             return View(clan);
         }
 
@@ -77,6 +80,7 @@ namespace EParkingOOAD.Controllers
             {
                 return NotFound();
             }
+            ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
             return View(clan);
         }
 
@@ -112,6 +116,7 @@ namespace EParkingOOAD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
             return View(clan);
         }
 

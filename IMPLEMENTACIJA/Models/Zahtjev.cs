@@ -4,8 +4,6 @@ namespace EParking.Models
 {
     public class Zahtjev
     {
-       
-
         [ScaffoldColumn(false)]
         public int ID { get; set; }
         //[Required]
