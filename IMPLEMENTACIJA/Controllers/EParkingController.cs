@@ -62,13 +62,13 @@ namespace EParking.Controllers
             //A UKOLIKO JE GOST DA PRIKAZE NAJBLIZI PARKING OD NJEGOVE TRENUTNE LOKACIJE
             //true -- najblizi parking
             //false -- rezrvisani parking
-            ViewBag.NajbliziParking = "'false';";
+            ViewBag.NajbliziParking = "'true';";
             ViewBag.Latitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
             return View(EParkingFacade.Instance);
         }
         [HttpPost]
-        public void SpasiKoordinate(double lat, double lon)
+        public IActionResult SpasiKoordinate(double lat, double lon)
         {
             foreach (var p in EParkingFacade.Instance.Parkinzi)
             {
@@ -78,6 +78,13 @@ namespace EParking.Controllers
                     break;
                 }
             }
+            //otvaramo Timer view odmah
+            return RedirectToAction("Timer", "EParking");
+        }
+
+        public IActionResult Timer()
+        {
+            return View();
         }
     }
 }

@@ -98,6 +98,10 @@
 
             function calculateAndShowRoute() {
                 parkinzi = @Html.Raw(ViewBag.Markeri);
+                var positionOptions = {
+                    enableHighAccuracy: true,
+                    maximumAge: 500
+                };
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
                         window.directionsService = new google.maps.DirectionsService();
@@ -121,7 +125,8 @@
                                 }
                             }
                             if (brojac == 0 && parkinzi[0].slobodnaMjesta == 0) {
-                                swal("Nema slobodnih mjesta", "Trenutno su svi parkinzi popunjeni do svog maksimalnog kapaciteta. Molimo pričekajte slobodno mjesto i osvježavajte stranicu.");
+                                swal("Nema slobodnih mjesta", "Trenutno su svi parkinzi popunjeni do svog maksimalnog kapaciteta. Molimo pričekajte slobodno mjesto i osvježavajte stranicu.", "error");
+                                document.getElementById("btnUlazak").disabled = false;
                             } else {
                                 request = {
                                     origin: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
@@ -171,10 +176,6 @@
                 return Math.sqrt(x * x + y * y) * R;
             }
 
-
-
-
-
         </script>
 
 
@@ -183,7 +184,7 @@
         <button id="btnPay" type="button" class="btn btn-primary btn-lg">Pay</button>
         <button id="btnRoute" type="button" class="btn btn-primary btn-lg" onclick="calculateAndShowRoute()">Find route</button>
         <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">Clear route</button>
-        <input id="btnUlazak" type="submit" class="btn btn-danger btn-lg" value="Registruj ulazak na parking" />
+        <input id="btnUlazak" type="submit" class="btn btn-primary btn-lg" value="Registruj ulazak" />
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script type="text/javascript">
