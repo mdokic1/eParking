@@ -4,12 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-<script>
-    function Alert() {
-        swal("Message", "Request sent");
-    }
-</script>
-
 <hr />
 <div class="container">
     <div class="row justify-content-center">
@@ -21,7 +15,7 @@
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <input type="submit" value="Send request" class="btn btn-primary" onclick="Alert()" />
+                            <input id="btnSubmit" type="submit" value="Send request" class="btn btn-primary" />
                         </div>
                     </form>
                 </div>
@@ -32,6 +26,12 @@
 </div>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    if (@Html.Raw(ViewBag.Alert) == 'show') {
+        swal("You are all done!", "Your request has been successfully sent.", "success");
+    }
+
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

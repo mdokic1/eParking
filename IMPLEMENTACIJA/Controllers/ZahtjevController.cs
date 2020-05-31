@@ -73,6 +73,8 @@ namespace EParkingOOAD.Controllers
             }
             //ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
             //ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
+            //OVO KORISTIM KAKO BIH PRIKAZAO ALERT
+            ViewBag.Alert = "'show'";
             return View(zahtjev);
         }
 

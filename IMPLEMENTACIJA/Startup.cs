@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EParking.Models;
+using System.Globalization;
 
 namespace EParking
 {
@@ -21,6 +22,11 @@ namespace EParking
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.CurrencySymbol = "€";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
 
         public IConfiguration Configuration { get; }
