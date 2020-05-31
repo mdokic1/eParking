@@ -69,7 +69,10 @@
                     <h3 class="naslov">Iznos za naplatu</h3>
                     <strong id="totalPrice" class="border-info">0.0 KM</strong>
                     <div class="buttons">
-                        <button id="startStop" class="btn btn-primary btn-lg" onclick="startStop()">Registruj izlazak</button>
+                        <form asp-action="Timer" method="post">
+                            <input id="iznos" name="iznos" type="hidden" value="" />
+                            <input id="startStop" type="submit" class="btn btn-primary btn-lg" value="Registruj izlazak" onclick="startStop()"/>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-4 text-md-right">
@@ -151,6 +154,7 @@
             function priceChange() {
                 price += intervalPriceValue;
                 document.getElementById("totalPrice").innerHTML = price.toFixed(3) + " KM";
+                document.getElementById("iznos").value = price.toFixed(3);
             }
 
             interval = window.setInterval(stopWatch, 1000);
@@ -167,10 +171,6 @@
                     window.clearInterval(interval);
                     window.clearInterval(intervalPrice);
                     status = "stopped";
-
-                    $.post("/EParking/ProslijediIznos", {
-                        iznos: price
-                    });
 
                 }
                 //else {
