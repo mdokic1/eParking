@@ -1,12 +1,10 @@
-﻿
+﻿@model ParkingLokacija
 @{
     ViewData["Title"] = "Timer";
 }
 
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        
-        <title>Stopwatch</title>
 
         <style>
             #display {
@@ -18,127 +16,192 @@
 
             .buttons {
                 text-align: center;
+                margin-top: 50px;
+            }
+
+            .col-md-4 {
+                font-size: 22px;
+            }
+
+            .border-info {
+                font-size: 52px;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .naslov {
+                margin-top: 20px;
+            }
+
+            .tekst1 {
+                margin-top: 30px;
+            }
+
+            .tekst2 {
+                margin-top: 30px;
             }
         </style>
 
     </head>
-<body>
+    <body>
 
-    <div class="container">
-
-        <div id="display">
-            00:00:00
+        <div class="jumbotron text-center">
+            <h1>Dobro došli na parking!</h1>
         </div>
 
-        <div class="buttons">
-            <button id="startStop" class="btn btn-primary btn-lg" onclick="startStop()">Regisgtruj izlazak</button>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-md-left">
+                    <h3>Osnovne informacije</h3>
+                    <div class="tekst1">
+                        <p>Naziv: @Model.Naziv</p>
+                        <p>Adresa: @Model.Adresa</p>
+                        <p>Slobodna mjesta: @Model.BrojSlobodnihMjesta / @Model.Kapacitet</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-center">
+                    <h3>Proteklo vrijeme</h3>
+                    <div id="display">
+                        00:00:00
+                    </div>
+                    <h3 class="naslov">Iznos za naplatu</h3>
+                    <strong id="totalPrice" class="border-info">0.0 KM</strong>
+                    <div class="buttons">
+                        <button id="startStop" class="btn btn-primary btn-lg" onclick="startStop()">Registruj izlazak</button>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-right">
+                    <h3>Informacije o cijeni</h3>
+                    <div class="tekst2">
+                        <p>Dnevna cijena po satu: @Model.Cjenovnik.DnevnaCijenaSat KM</p>
+                        <p>Noćna cijena po satu: @Model.Cjenovnik.NocnaCijenaSat KM</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
+        <script>
+            //Define vars to hold time values
+            let seconds = 0;
+            let minutes = 0;
+            let hours = 0;
 
-    <script>
-        //Define vars to hold time values
-        let seconds = 0;
-        let minutes = 0;
-        let hours = 0;
+            //Define vars to hold "display" value
+            let displaySeconds = 0;
+            let displayMinutes = 0;
+            let displayHours = 0;
 
-        //Define vars to hold "display" value
-        let displaySeconds = 0;
-        let displayMinutes = 0;
-        let displayHours = 0;
+            //Define var to hold setInterval() function
+            let interval = null;
+            let intervalPrice = null;
 
-        //Define var to hold setInterval() function
-        let interval = null;
+            //Define var to hold stopwatch status
+            let status = "started";
 
-        //Define var to hold stopwatch status
-        let status = "started";
+            //Stopwatch function (logic to determine when to increment next value, etc.)
+            function stopWatch() {
 
-        //Stopwatch function (logic to determine when to increment next value, etc.)
-        function stopWatch() {
+                seconds++;
 
-            seconds++;
+                //Logic to determine when to increment next value
+                if (seconds / 60 === 1) {
+                    seconds = 0;
+                    minutes++;
 
-            //Logic to determine when to increment next value
-            if (seconds / 60 === 1) {
-                seconds = 0;
-                minutes++;
+                    if (minutes / 60 === 1) {
+                        minutes = 0;
+                        hours++;
+                    }
 
-                if (minutes / 60 === 1) {
-                    minutes = 0;
-                    hours++;
                 }
 
+                //If seconds/minutes/hours are only one digit, add a leading 0 to the value
+                if (seconds < 10) {
+                    displaySeconds = "0" + seconds.toString();
+                }
+                else {
+                    displaySeconds = seconds;
+                }
+
+                if (minutes < 10) {
+                    displayMinutes = "0" + minutes.toString();
+                }
+                else {
+                    displayMinutes = minutes;
+                }
+
+                if (hours < 10) {
+                    displayHours = "0" + hours.toString();
+                }
+                else {
+                    displayHours = hours;
+                }
+
+                //Display updated time values to user
+                document.getElementById("display").innerHTML = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+
             }
 
-            //If seconds/minutes/hours are only one digit, add a leading 0 to the value
-            if (seconds < 10) {
-                displaySeconds = "0" + seconds.toString();
-            }
-            else {
-                displaySeconds = seconds;
-            }
+            let price = 0.0;
+            let parkingPrice = @Html.Raw(Model.Cjenovnik.DnevnaCijenaSat);
+            let intervalPriceValue = parkingPrice / 60.0;
 
-            if (minutes < 10) {
-                displayMinutes = "0" + minutes.toString();
-            }
-            else {
-                displayMinutes = minutes;
+            function priceChange() {
+                price += intervalPriceValue;
+                document.getElementById("totalPrice").innerHTML = price.toFixed(3) + " KM";
             }
 
-            if (hours < 10) {
-                displayHours = "0" + hours.toString();
+            interval = window.setInterval(stopWatch, 1000);
+            intervalPrice = window.setInterval(priceChange, 60000);
+
+            function startStop() {
+                
+                //ako ne zelis da se opet pokrene nakon stopa ukini setInterval u ELSE!!!
+                if (status == "started") {
+
+                    //Start the stopwatch (by calling the setInterval() function)
+                    //interval = window.setInterval(stopWatch, 1000);
+                    //document.getElementById("startStop").innerHTML = "Stop";
+                    window.clearInterval(interval);
+                    window.clearInterval(intervalPrice);
+                    status = "stopped";
+
+                    $.post("/EParking/ProslijediIznos", {
+                        iznos: price
+                    });
+
+                }
+                //else {
+
+                //    //window.clearInterval(interval);
+                //    interval = window.setInterval(stopWatch, 1000);
+                //    intervalPrice = window.setInterval(priceChange, 60000);
+                //    //document.getElementById("startStop").innerHTML = "Start";
+                //    status = "started";
+
+                //}
             }
-            else {
-                displayHours = hours;
-            }
 
-            //Display updated time values to user
-            document.getElementById("display").innerHTML = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+            //Function to reset the stopwatch
+            function reset() {
 
-        }
-
-        interval = window.setInterval(stopWatch, 1000);
-
-        function startStop() {
-            //ako ne zelis da se opet pokrene nakon stopa ukini setInterval u ELSE!!!
-            if (status == "started") {
-
-                //Start the stopwatch (by calling the setInterval() function)
-                //interval = window.setInterval(stopWatch, 1000);
-                //document.getElementById("startStop").innerHTML = "Stop";
                 window.clearInterval(interval);
-                status = "stopped";
-
-            }
-            else {
-
-                //window.clearInterval(interval);
-                interval = window.setInterval(stopWatch, 1000);
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                document.getElementById("display").innerHTML = "00:00:00";
                 //document.getElementById("startStop").innerHTML = "Start";
-                status = "started";
 
             }
 
-        }
+        </script>
 
-        //Function to reset the stopwatch
-        function reset() {
-
-            window.clearInterval(interval);
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
-            document.getElementById("display").innerHTML = "00:00:00";
-            //document.getElementById("startStop").innerHTML = "Start";
-
-        }
-
-    </script>
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-</body>
+    </body>
 

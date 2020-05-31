@@ -10,7 +10,7 @@ namespace EParking.Controllers
     public class EParkingController : Controller
     {
         private readonly EParkingContext _context;
-        ParkingLokacija odredisnaParkingLokacija = new ParkingLokacija();
+        private ParkingLokacija odredisnaParkingLokacija = new ParkingLokacija();
 
         public EParkingController(EParkingContext context)
         {
@@ -83,6 +83,34 @@ namespace EParking.Controllers
         }
 
         public IActionResult Timer()
+        {
+            //samo zasad nece trebati kasnije vjerovatno
+            EParkingFacade.Instance.Parkinzi = _context.ParkingLokacija.ToList();
+            List<Cjenovnik> Cjenovnici = _context.Cjenovnik.ToList();
+            foreach (var p in EParkingFacade.Instance.Parkinzi)
+            {
+                foreach (var c in Cjenovnici)
+                {
+                    if (p.CjenovnikId == c.ID)
+                    {
+                        p.Cjenovnik = c;
+                    }
+                }
+            }
+            //samo dok pravim Timer View ide ova jedna linija ispod
+            odredisnaParkingLokacija = EParkingFacade.Instance.Parkinzi.ElementAt(1);
+            //
+            return View(odredisnaParkingLokacija);
+        }
+        [HttpPost]
+        public IActionResult ProslijediIznos(double iznos)
+        {
+            ViewBag.Iznos = iznos;
+            //return RedirectToAction("Pay", "EParking");
+            return View("Pay");
+        }
+
+        public IActionResult Pay()
         {
             return View();
         }
