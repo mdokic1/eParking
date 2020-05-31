@@ -97,6 +97,7 @@ namespace EParkingOOAD.Controllers
             {
                 return NotFound();
             }
+                        
             //ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
             return View(vozilo);
         }
@@ -106,8 +107,10 @@ namespace EParkingOOAD.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ModelAuta,BrojTablice,BrojSasije,BrojMotora,KorisnikId")] Vozilo vozilo)
+        public async Task<IActionResult> Edit(int id, [Bind("ModelAuta", "BrojTablice", "BrojSasije", "BrojMotora", "KorisnikId")] Vozilo vozilo)
         {
+            vozilo.ID = id;
+            
             if (id != vozilo.ID)
             {
                 return NotFound();
@@ -116,7 +119,7 @@ namespace EParkingOOAD.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                { 
                     _context.Update(vozilo);
                     await _context.SaveChangesAsync();
                 }
@@ -131,7 +134,15 @@ namespace EParkingOOAD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                List<Korisnik> korisnici = _context.Korisnik.ToList();
+                foreach(var k in korisnici)
+                {
+                    if(vozilo.KorisnikId == k.ID)
+                    {
+                        return RedirectToAction("Account", "Clan", k); 
+                    }
+                }
+                
             }
             //ViewData["KorisnikId"] = new SelectList(_context.Korisnik, "ID", "ImePrezime", vozilo.KorisnikId);
             return View(vozilo);

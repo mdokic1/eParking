@@ -42,6 +42,31 @@ namespace EParkingOOAD.Controllers
             return View(clan);
         }
 
+        public IActionResult Account(string username, string password)
+        {
+            List<Korisnik> korisnici = _context.Korisnik.ToList();
+            List<Vozilo> vozila = _context.Vozilo.ToList();
+            foreach(var k in korisnici)
+            {
+                if(k.Username == username && k.Password == password)
+                {
+                    foreach(var v in vozila)
+                    {
+                        if(v.KorisnikId == k.ID)
+                        {
+                            ViewBag.Model = v.ModelAuta;
+                            ViewBag.Tablice = v.BrojTablice;
+                            ViewBag.Sasija = v.BrojSasije;
+                            ViewBag.Motor = v.BrojMotora;
+                            return View(k);
+                        }
+                    }
+                    return View(k);
+                }
+            }
+            return View();
+        }
+
         // GET: Clan/Create
         public IActionResult Create()
         {
@@ -86,6 +111,7 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
             ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
+            //return RedirectToAction("Clan", "Edit", new { id = clan.ID });
             return View(clan);
         }
 
@@ -94,8 +120,9 @@ namespace EParkingOOAD.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RezervisanoParkingMjesto,StatusClanarine,TipClanarine,ImePrezime,Username,Password,JMBG,Adresa,BrojMobitela,Email")] Clan clan)
+        public async Task<IActionResult> Edit(int id, [Bind("RezervisanoParkingMjesto","StatusClanarine","TipClanarine","ImePrezime","Username","Password","JMBG","Adresa","BrojMobitela","Email")] Clan clan)
         {
+            clan.ID = id;
             if (id != clan.ID)
             {
                 return NotFound();
@@ -119,7 +146,16 @@ namespace EParkingOOAD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                List<Vozilo> vozila = _context.Vozilo.ToList();
+                foreach(var v in vozila)
+                {
+                    if(v.KorisnikId == clan.ID)
+                    {
+                        //TempData["clanID"] = Newtonsoft.Json.JsonConvert.SerializeObject(clan);
+                        return RedirectToAction("Edit", "Vozilo", new { id = v.ID });
+                    }
+                }
+                
             }
             ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
             return View(clan);

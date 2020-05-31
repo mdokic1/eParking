@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using EParking.Models;
@@ -62,7 +63,7 @@ namespace EParking.Controllers
             //A UKOLIKO JE GOST DA PRIKAZE NAJBLIZI PARKING OD NJEGOVE TRENUTNE LOKACIJE
             //true -- najblizi parking
             //false -- rezrvisani parking
-            ViewBag.NajbliziParking = "'false';";
+            ViewBag.NajbliziParking = "'true';";
             ViewBag.Latitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
             return View(EParkingFacade.Instance);
@@ -78,6 +79,57 @@ namespace EParking.Controllers
                     break;
                 }
             }
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            List<Korisnik> korisnici = _context.Korisnik.ToList();
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            List<Administrator> administratori = _context.Administrator.ToList();
+            List<Vozilo> vozila = _context.Vozilo.ToList();
+            bool pronadjeno = false;
+            
+            foreach(var k in korisnici)
+            {
+                if(k.Username == username && k.Password == password)
+                {
+                    pronadjeno = true;
+                    foreach(var v in vozila)
+                    {
+                        if(v.KorisnikId == k.ID)
+                        {
+                            //TempData["v"] = Newtonsoft.Json.JsonConvert.SerializeObject(v);
+                            return RedirectToAction("Account", "Clan", k);
+                        }
+                    }
+                   
+                }
+            }
+
+            foreach (var v in vlasnici)
+            {
+                if (v.Username == username && v.Password == password)
+                {
+                    pronadjeno = true;
+                    return RedirectToAction("Account", "Vlasnik");
+                }
+            }
+
+            foreach (var a in administratori)
+            {
+                if (a.Username == username && a.Password == password)
+                {
+                    pronadjeno = true;
+                    return RedirectToAction("Account", "Administrator");
+                }
+            }
+            return View();
         }
     }
 }
