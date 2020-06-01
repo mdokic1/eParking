@@ -191,6 +191,19 @@
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         
+                       
+                    </div>
+                    <div class="tab-pane fade" id="zahtjevi" role="tabpanel" aria-labelledby="zahtjevi-tab">
+                        <table>
+                            @foreach (var item in ViewBag.zahtjevi)
+                            {
+                                <tr>
+                                    <td>Zahtjev br. @item.ID &nbsp; </td>
+                                    <td><a asp-action="Edit" asp-route-id="@item.ID">Obradi</a></td>
+                                </tr>
+
+                            }
+                        </table>
                     </div>
                 </div>
             </div>

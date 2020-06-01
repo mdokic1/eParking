@@ -27,11 +27,20 @@ namespace EParkingOOAD.Controllers
         public IActionResult Account(string username, string password)
         {
             List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            List<Zahtjev> odgovarajuci = new List<Zahtjev>();
             foreach (var v in vlasnici)
             {
                 if (v.Username == username && v.Password == password)
                 {
-                    
+                    List<Zahtjev> zahtjevi = _context.Zahtjev.ToList();
+                    foreach(var z in zahtjevi)
+                    {
+                        if(z.VlasnikId == v.ID)
+                        {
+                            odgovarajuci.Add(z);
+                        }
+                    }
+                    ViewBag.zahtjevi = odgovarajuci;
                     return View(v);
                 }
             }
