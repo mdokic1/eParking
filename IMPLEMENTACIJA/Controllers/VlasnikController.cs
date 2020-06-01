@@ -24,8 +24,17 @@ namespace EParkingOOAD.Controllers
             return View(await _context.Vlasnik.ToListAsync());
         }
 
-        public IActionResult Account()
+        public IActionResult Account(string username, string password)
         {
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            foreach (var v in vlasnici)
+            {
+                if (v.Username == username && v.Password == password)
+                {
+                    
+                    return View(v);
+                }
+            }
             return View();
         }
 
@@ -92,6 +101,7 @@ namespace EParkingOOAD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Username,Password,ImePrezime,Prihodi")] Vlasnik vlasnik)
         {
+            vlasnik.ID = id;
             if (id != vlasnik.ID)
             {
                 return NotFound();
@@ -115,7 +125,7 @@ namespace EParkingOOAD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Account", "Vlasnik", vlasnik);
             }
             return View(vlasnik);
         }
