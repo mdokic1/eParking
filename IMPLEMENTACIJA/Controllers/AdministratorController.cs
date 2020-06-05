@@ -21,7 +21,7 @@ namespace EParkingOOAD.Controllers
         // GET: Administrator
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Administrator.ToListAsync());
+            return View();
         }
 
         // GET: Administrator/Details/5
