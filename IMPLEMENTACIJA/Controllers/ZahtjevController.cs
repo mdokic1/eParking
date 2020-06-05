@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EParking.Models;
+using System.ComponentModel.Design;
 
 namespace EParkingOOAD.Controllers
 {
@@ -40,6 +41,120 @@ namespace EParkingOOAD.Controllers
             if (zahtjev == null)
             {
                 return NotFound();
+            }
+
+            return View(zahtjev);
+        }
+
+        public async Task<IActionResult> OdobravanjeZahtjeva(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var zahtjev = await _context.Zahtjev
+                .Include(z => z.Vlasnik)
+                .Include(z => z.Vozilo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (zahtjev == null)
+            {
+                return NotFound();
+            }
+
+            List<Clan> clanovi = _context.Clan.ToList();
+            Clan clan = null;
+            foreach(var c in clanovi)
+            {
+                if(zahtjev.Vozilo.KorisnikId == c.ID)
+                {
+                    clan = c;
+                    c.StatusClanarine = StatusClanarine.ACTIVE;
+                    _context.Clan.Update(c);
+                    _context.SaveChanges();
+                }
+            }
+
+            //_context.Zahtjev.Remove(zahtjev);
+
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            foreach(var v in vlasnici)
+            {
+                if(zahtjev.VlasnikId == v.ID)
+                {
+                    ViewBag.Vlasnik = v;
+                    return RedirectToAction("Account", "Vlasnik", v);
+                    //return View(zahtjev);
+                }
+            }
+
+            return View(zahtjev);
+        }
+
+        public async Task<IActionResult> OdbijanjeZahtjeva(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var zahtjev = await _context.Zahtjev
+                .Include(z => z.Vlasnik)
+                .Include(z => z.Vozilo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (zahtjev == null)
+            {
+                return NotFound();
+            }
+
+            //_context.Zahtjev.Remove(zahtjev);
+
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            foreach (var v in vlasnici)
+            {
+                if (zahtjev.VlasnikId == v.ID)
+                {
+                    ViewBag.Vlasnik = v;
+                    return RedirectToAction("Account", "Vlasnik", v);
+                    //return View(zahtjev);
+                }
+            }
+
+            return View(zahtjev);
+        }
+
+        public async Task<IActionResult> Obrada(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var zahtjev = await _context.Zahtjev
+                .Include(z => z.Vlasnik)
+                .Include(z => z.Vozilo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (zahtjev == null)
+            {
+                return NotFound();
+            }
+
+            List<Clan> clanovi = _context.Clan.ToList();
+            List<ParkingLokacija> parkinzi = _context.ParkingLokacija.ToList();
+            foreach(var c in clanovi)
+            {
+                if(zahtjev.Vozilo.KorisnikId == c.ID)
+                {
+                    ViewBag.Korisnik = c;
+                    foreach(var p in parkinzi)
+                    {
+                        if(c.RezervisanoParkingMjesto == p.ID)
+                        {
+                            ViewBag.Parking = p;
+                        }
+                    }
+                    return View(zahtjev);
+                }
             }
 
             return View(zahtjev);

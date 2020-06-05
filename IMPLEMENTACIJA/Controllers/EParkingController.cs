@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using EParking.Models;
@@ -10,7 +11,7 @@ namespace EParking.Controllers
     public class EParkingController : Controller
     {
         private readonly EParkingContext _context;
-        private ParkingLokacija odredisnaParkingLokacija = new ParkingLokacija();
+        private double KonacniIznos { get; set; }
 
         public EParkingController(EParkingContext context)
         {
@@ -67,9 +68,11 @@ namespace EParking.Controllers
             ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
             return View(EParkingFacade.Instance);
         }
+
         [HttpPost]
-        public IActionResult SpasiKoordinate(double lat, double lon)
+        public async Task<IActionResult> Map(double lat, double lon)
         {
+            ParkingLokacija odredisnaParkingLokacija = null;
             foreach (var p in EParkingFacade.Instance.Parkinzi)
             {
                 if (p.Lat == lat && p.Long == lon)
@@ -78,40 +81,139 @@ namespace EParking.Controllers
                     break;
                 }
             }
+
+            //azuriranje baze smanji se broj slobodnih mjesta
+            odredisnaParkingLokacija.BrojSlobodnihMjesta -= 1;
+            _context.Update(odredisnaParkingLokacija);
+            await _context.SaveChangesAsync();
+            //-----------------------------------------------
+
             //otvaramo Timer view odmah
-            return RedirectToAction("Timer", "EParking");
+            return RedirectToAction("Timer", "EParking", odredisnaParkingLokacija);
         }
 
-        public IActionResult Timer()
+        
+        public IActionResult Timer(ParkingLokacija odredisnaParkingLokacija = null)
         {
-            //samo zasad nece trebati kasnije vjerovatno
-            EParkingFacade.Instance.Parkinzi = _context.ParkingLokacija.ToList();
             List<Cjenovnik> Cjenovnici = _context.Cjenovnik.ToList();
-            foreach (var p in EParkingFacade.Instance.Parkinzi)
+            foreach (var c in Cjenovnici)
             {
-                foreach (var c in Cjenovnici)
+                if (odredisnaParkingLokacija.CjenovnikId == c.ID)
                 {
-                    if (p.CjenovnikId == c.ID)
-                    {
-                        p.Cjenovnik = c;
-                    }
+                    odredisnaParkingLokacija.Cjenovnik = c;
                 }
             }
-            //samo dok pravim Timer View ide ova jedna linija ispod
-            odredisnaParkingLokacija = EParkingFacade.Instance.Parkinzi.ElementAt(1);
-            //
             return View(odredisnaParkingLokacija);
         }
+        
         [HttpPost]
-        public IActionResult ProslijediIznos(double iznos)
+        public async Task<IActionResult> TimerAsync(double iznos, ParkingLokacija parkingLokacija)
         {
-            ViewBag.Iznos = iznos;
-            //return RedirectToAction("Pay", "EParking");
-            return View("Pay");
+            //oslobodi zauzeto mjesto na parkingu
+            foreach (var p in EParkingFacade.Instance.Parkinzi)
+            {
+                if (p.ID == parkingLokacija.ID)
+                {
+                    parkingLokacija = p;
+                    break;
+                }
+            }
+            parkingLokacija.BrojSlobodnihMjesta += 1;
+            _context.Update(parkingLokacija);
+            await _context.SaveChangesAsync();
+            //-----------------------------------
+
+            TempData["iznos"] = Newtonsoft.Json.JsonConvert.SerializeObject(iznos);
+            TempData["parkingLokacijaID"] = Newtonsoft.Json.JsonConvert.SerializeObject(parkingLokacija.ID);
+            return RedirectToAction("Pay", "EParking");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PayAsync(string username, double cardNumber, int month, int year, int cvv)
+        {
+            ViewBag.Alert = "'show'";
+            //dodajemo Vlasniku parkinga prihode
+            double prihodi = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["prihodi"]);
+            int parkingLokacijaID = Newtonsoft.Json.JsonConvert.DeserializeObject<int>((string)TempData["parkingLokacijaID"]);
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            ParkingLokacija vlasnikovParking = new ParkingLokacija();
+            foreach (var p in EParkingFacade.Instance.Parkinzi)
+            {
+                if (p.ID == parkingLokacijaID)
+                {
+                    vlasnikovParking = p;
+                    break;
+                }
+            }
+            foreach (var v in vlasnici)
+            {
+                if (vlasnikovParking.VlasnikId == v.ID)
+                {
+                    v.Prihodi += prihodi;
+                    _context.Update(v);
+                    await _context.SaveChangesAsync();
+                    break;
+                }
+            }
+            //----------------------------------
+            return View();
         }
 
         public IActionResult Pay()
         {
+            ViewBag.Iznos = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["iznos"]);
+            TempData["prihodi"] = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Iznos);
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            List<Korisnik> korisnici = _context.Korisnik.ToList();
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            List<Administrator> administratori = _context.Administrator.ToList();
+            List<Vozilo> vozila = _context.Vozilo.ToList();
+            bool pronadjeno = false;
+            
+            foreach(var k in korisnici)
+            {
+                if(k.Username == username && k.Password == password)
+                {
+                    pronadjeno = true;
+                    foreach(var v in vozila)
+                    {
+                        if(v.KorisnikId == k.ID)
+                        {
+                            //TempData["v"] = Newtonsoft.Json.JsonConvert.SerializeObject(v);
+                            return RedirectToAction("Account", "Clan", k);
+                        }
+                    }
+                   
+                }
+            }
+
+            foreach (var v in vlasnici)
+            {
+                if (v.Username == username && v.Password == password)
+                {
+                    pronadjeno = true;
+                    return RedirectToAction("Account", "Vlasnik", v);
+                }
+            }
+
+            foreach (var a in administratori)
+            {
+                if (a.Username == username && a.Password == password)
+                {
+                    pronadjeno = true;
+                    return RedirectToAction("Account", "Administrator");
+                }
+            }
             return View();
         }
     }

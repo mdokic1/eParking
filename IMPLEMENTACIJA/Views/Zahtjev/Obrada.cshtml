@@ -1,0 +1,86 @@
+﻿@model EParking.Models.Zahtjev
+
+@{
+    ViewData["Title"] = "Obrada";
+}
+
+<head>
+    <style>
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Obrada zahtjeva</div>
+                    <div class="card-body">
+
+                        <form asp-action="Obrada">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row justify-content-left">
+                                <h5>Ime i prezime: @ViewBag.Korisnik.ImePrezime</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Matični broj: @ViewBag.Korisnik.JMBG</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Parking mjesto: @ViewBag.Parking.Naziv</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Tip članarine: @ViewBag.Korisnik.TipClanarine</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Email: @ViewBag.Korisnik.Email</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Broj telefona: @ViewBag.Korisnik.BrojMobitela</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Adresa: @ViewBag.Korisnik.Adresa</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Registarske tablice: @Model.Vozilo.BrojTablice</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Broj motora: @Model.Vozilo.BrojMotora</h5>
+                            </div>
+                            <div class="row justify-content-left">
+                                <h5>Broj šasije: @Model.Vozilo.BrojSasije</h5>
+                            </div>
+                            <br />
+                            <br />
+
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <form method="get" asp-action="OdobravanjeZahtjeva" asp-route-id="@Model.ID">
+                                <div class="row justify-content-center">
+                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value="Odobri" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="column">
+                            <form method="get" asp-action="OdbijanjeZahtjeva" asp-route-id="@Model.ID">
+                                <div class="row justify-content-center">
+                                    <input type="submit" value="Odbij" class="btn btn-primary" /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+      </div>
+
+        
+</div>
+           
+    

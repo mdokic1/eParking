@@ -49,6 +49,16 @@
     </head>
     <body>
 
+        <!--Hidden fileds so I can send data-->
+        <form asp-action="Map" method="post">
+            <div class="form-group">
+                <input id="lat" name="lat" type="hidden" value="" />
+                <input id="lon" name="lon" type="hidden" value="" />
+                <input id="btnUlazak" type="submit" class="btn btn-primary btn-lg" value="Registruj ulazak" />
+            </div>
+        </form>
+        
+
         <div id="map"></div>
         <script>
             var parkinzi = @Html.Raw(ViewBag.Markeri);
@@ -146,13 +156,16 @@
                             odredisnilon = @Html.Raw(ViewBag.Longitude);
                         }
 
+                        document.getElementById("lat").value = odredisniLat;
+                        document.getElementById("lon").value = odredisniLon;
+
                         directionsDisplay.setMap(map);
                         directionsService.route(request, (result, status) => {
                             if (status == 'OK') {
                                 directionsDisplay.setDirections(result);
                             }
                         });
-
+                        
                         document.getElementById("btnUlazak").disabled = false;
 
                     });
@@ -184,19 +197,21 @@
         <button id="btnPay" type="button" class="btn btn-primary btn-lg">Pay</button>
         <button id="btnRoute" type="button" class="btn btn-primary btn-lg" onclick="calculateAndShowRoute()">Find route</button>
         <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">Clear route</button>
-        <input id="btnUlazak" type="submit" class="btn btn-primary btn-lg" value="Registruj ulazak" />
+        
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        <script type="text/javascript">
+        @*<script type="text/javascript">
             $(function () {
                 $('#btnUlazak').click(function () {
-                    $.post("/EParking/SpasiKoordinate", {
-                        lat: odredisniLat,
-                        lon: odredisniLon
-                    });
+                    //$.post("/EParking/SpasiKoordinate", {
+                    //    lat: odredisniLat,
+                    //    lon: odredisniLon
+                    //});
+                    $('#lat').attr('value', odredisniLat);
+                    $('#lon').attr('value', odredisniLon);
                 });
             });
-        </script>
+        </script>*@
 
 
         <script async defer

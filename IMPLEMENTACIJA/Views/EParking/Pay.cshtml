@@ -1,4 +1,4 @@
-﻿
+﻿@model double
 @{
     ViewData["Title"] = "Payment";
 }
@@ -16,6 +16,11 @@
                 margin-top: 45px;
                 height: 45px;
             }
+            .btnCashConfirm {
+                width: 33%;
+                margin-top: 45px;
+                height: 45px;
+            }
             .btn {
                 margin-bottom: 15px;
             }
@@ -25,7 +30,7 @@
 
     <body>
         <div class="container">
-            <h3 class="text-center">Konačni iznos za naplatu: @Html.Raw(ViewBag.Iznos) KM</h3>
+            <h3 class="text-center">Konačni iznos za naplatu: @ViewBag.Iznos KM</h3>
 
             <hr>
 
@@ -56,16 +61,16 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="nav-tab-card">
                                     @*<p class="alert alert-success">Some text success or error</p>*@
-                                    <form role="form">
+                                    <form role="form" asp-action="Pay" method="post">
                                         <div class="form-group">
                                             <label for="username">Full name (on the card)</label>
-                                            <input type="text" class="form-control" name="username" placeholder="" required="">
+                                            <input type="text" class="form-control" name="username" placeholder="" required>
                                         </div> <!-- form-group.// -->
 
                                         <div class="form-group">
                                             <label for="cardNumber">Card number</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                <input type="text" class="form-control" name="cardNumber" placeholder="" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text text-muted">
                                                         <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
@@ -80,18 +85,18 @@
                                                 <div class="form-group">
                                                     <label><span class="hidden-xs">Expiration</span> </label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" placeholder="MM" name="">
-                                                        <input type="number" class="form-control" placeholder="YY" name="">
+                                                        <input type="number" class="form-control" placeholder="MM" name="month" required>
+                                                        <input type="number" class="form-control" placeholder="YY" name="year" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label data-toggle="tooltip" title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                                                    <input type="number" class="form-control" required="">
+                                                    <input type="number" class="form-control" name="cvv" required>
                                                 </div> <!-- form-group.// -->
                                             </div>
-                                            <button class="subscribe btn btn-primary" type="button" onclick="showAlert()"> Confirm  </button>
+                                            <input class="subscribe btn btn-primary" type="submit" value="Confirm">
                                         </div> <!-- row.// -->
 
                                     </form>
@@ -105,15 +110,18 @@
                                     </p>
                                 </div>
                                 <div class="tab-pane fade" id="nav-tab-bank">
-                                    <div class="row justify-content-center">
-                                        <p>Detalji o naplati gotovinom</p>
-                                        <p>
-                                            <strong>Upute:</strong> Ukoliko plaćate gotovinom, molimo Vas da odete do naplatne kućice te osoblju pokažete
-                                            <strong>stranicu na kojoj se trenutno nalazite</strong> koja sadrži <strong>konačni iznos</strong> za naplatu <strong>prikazan na vrhu</strong> stranice.
-                                            Nakon što obavite naplatu možete pritisnuti dugme <strong>Confirm</strong>.
-                                        </p>
-                                        <button class="subscribe btn btn-primary" type="button" onclick="showAlert()"> Confirm  </button>
-                                    </div>
+                                    <form asp-action="Pay" method="post">
+                                        <div class="row justify-content-center">
+                                            <p>Detalji o naplati gotovinom</p>
+                                            <p>
+                                                <strong>Upute:</strong> Ukoliko plaćate gotovinom, molimo Vas da odete do naplatne kućice te osoblju pokažete
+                                                <strong>stranicu na kojoj se trenutno nalazite</strong> koja sadrži <strong>konačni iznos</strong> za naplatu <strong>prikazan na vrhu</strong> stranice.
+                                                Nakon što obavite naplatu možete pritisnuti dugme <strong>Confirm</strong>.
+                                            </p>
+                                            <input id="btnCashConfirm" class="subscribe btn btn-primary" type="submit" value="Confirm" />
+                                        </div>
+                                    </form>
+                                
 
                                 </div> <!-- tab-pane.// -->
                             </div> <!-- tab-content .// -->
@@ -128,11 +136,17 @@
         </div>
         <!--container end.//-->
 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">ValidityState</script>
+        <script>
+            if (@Html.Raw(ViewBag.Alert) == 'show') {
+                swal("Naplata uspješno okončana!", "Hvala vam na posjeti!", "success");
+            }
+        </script>
         <script>
             function showAlert() {
                 swal("Naplata uspješno okončana!", "Hvala vam na posjeti!", "success");
             }
         </script>
 
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     </body>    
