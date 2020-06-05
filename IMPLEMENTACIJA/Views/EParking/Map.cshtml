@@ -9,57 +9,64 @@
         <style>
             /* Set the size of the div element that contains the map */
             #map {
-                height: 800px; 
-                width: 90%;
+                height: 800px;
+                width: 100%;
             }
+
             .container-fluid {
                 position: relative;
             }
 
-            #btnPay {
+            #btnRoute {
                 position: absolute;
-                top: 115px;
-                right: 10px;
-                width: 185px;
+                top: 120px;
+                right: 25px;
+                width: 100px;
                 height: 100px;
             }
 
-            #btnRoute {
-                position: absolute;
-                top: 0;
-                right: 10px;
-                width: 185px;
-                height: 100px;
-            }
             #btnClearRoute {
                 position: absolute;
-                bottom: 15px;
-                right: 10px;
-                width: 185px;
-                height: 50px;
-            }
-            #btnUlazak {
-                position: absolute;
-                top: 230px;
-                right: 10px;
-                width: 185px;
+                top: 350px;
+                right: 25px;
+                width: 100px;
                 height: 100px;
             }
+
+            #btnUlazak {
+                position: absolute;
+                top: 235px;
+                right: 25px;
+                width: 100px;
+                height: 100px;
+                font-family: FontAwesome;
+                font-size: 25px;
+            }
         </style>
+        <script src="https://kit.fontawesome.com/3874a11e93.js" crossorigin="anonymous"></script>
     </head>
     <body>
 
-        <!--Hidden fileds so I can send data-->
-        <form asp-action="Map" method="post">
-            <div class="form-group">
-                <input id="lat" name="lat" type="hidden" value="" />
-                <input id="lon" name="lon" type="hidden" value="" />
-                <input id="btnUlazak" type="submit" class="btn btn-primary btn-lg" value="Registruj ulazak" />
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map"></div>
+                <button id="btnRoute" type="button" class="btn btn-secondary btn-lg" onclick="calculateAndShowRoute()">
+                    <i class="fas fa-route fa-2x"></i>
+                </button>
+                <!--Hidden fileds so I can send data-->
+                <form asp-action="Map" method="post">
+                    <div class="form-group">
+                        <input id="lat" name="lat" type="hidden" value="" />
+                        <input id="lon" name="lon" type="hidden" value="" />
+                        <input id="btnUlazak" type="submit" class="btn btn-secondary btn-lg" value="&#xf1b9 &#xf090"/>
+                    </div>
+                </form>
+                <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">
+                    <i class="fas fa-trash-alt fa-2x"></i>
+                </button>
             </div>
-        </form>
-        
+        </div>
 
-        <div id="map"></div>
         <script>
             var parkinzi = @Html.Raw(ViewBag.Markeri);
             var najbliziParking = @Html.Raw(ViewBag.NajbliziParking);
@@ -165,7 +172,7 @@
                                 directionsDisplay.setDirections(result);
                             }
                         });
-                        
+
                         document.getElementById("btnUlazak").disabled = false;
 
                     });
@@ -193,11 +200,6 @@
 
 
 
-
-        <button id="btnPay" type="button" class="btn btn-primary btn-lg">Pay</button>
-        <button id="btnRoute" type="button" class="btn btn-primary btn-lg" onclick="calculateAndShowRoute()">Find route</button>
-        <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">Clear route</button>
-        
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
         @*<script type="text/javascript">

@@ -2,12 +2,19 @@
 }
 
 .landing-section {
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-image: url(../2011_ParkingTower15.jpg);
+    padding: 100px 0;
+    align-items: center;
+  
+}
+.landing-section-naslovna {
     height: 100vh;
     width: 100%;
     background-size: cover;
-    background-image: url(../2011_ParkingTower20.jpg);
-}
-.landing-section-contact {
     background-image: url(../2011_ParkingTower.jpg);
 }
 
