@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -75,12 +76,25 @@ namespace EParkingOOAD.Controllers
                 }
             }
 
-            //_context.Zahtjev.Remove(zahtjev);
+            List<Vozilo> vozila = _context.Vozilo.ToList();
+            foreach(var v in vozila)
+            {
+                if(zahtjev.VoziloId == v.ID)
+                {
+                    v.DatumRegistracije = DateTime.Now;
+                    _context.Vozilo.Update(v);
+                    _context.SaveChanges();
+                }
+            }
+            Zahtjev temp = zahtjev;
+
+            _context.Zahtjev.Remove(zahtjev);
+            await _context.SaveChangesAsync();
 
             List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
             foreach(var v in vlasnici)
             {
-                if(zahtjev.VlasnikId == v.ID)
+                if(temp.VlasnikId == v.ID)
                 {
                     ViewBag.Vlasnik = v;
                     return RedirectToAction("Account", "Vlasnik", v);
@@ -88,7 +102,7 @@ namespace EParkingOOAD.Controllers
                 }
             }
 
-            return View(zahtjev);
+            return View(temp);
         }
 
         public async Task<IActionResult> OdbijanjeZahtjeva(int? id)
@@ -107,12 +121,15 @@ namespace EParkingOOAD.Controllers
                 return NotFound();
             }
 
-            //_context.Zahtjev.Remove(zahtjev);
+            Zahtjev temp = zahtjev;
+
+            _context.Zahtjev.Remove(zahtjev);
+            await _context.SaveChangesAsync();
 
             List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
             foreach (var v in vlasnici)
             {
-                if (zahtjev.VlasnikId == v.ID)
+                if (temp.VlasnikId == v.ID)
                 {
                     ViewBag.Vlasnik = v;
                     return RedirectToAction("Account", "Vlasnik", v);
@@ -120,7 +137,7 @@ namespace EParkingOOAD.Controllers
                 }
             }
 
-            return View(zahtjev);
+            return View(temp);
         }
 
         public async Task<IActionResult> Obrada(int? id)

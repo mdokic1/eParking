@@ -76,13 +76,14 @@ namespace EParkingOOAD.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Username,Password,ImePrezime,Prihodi")] Vlasnik vlasnik)
+        public async Task<IActionResult> Create(Vlasnik vlasnik)
         {
             if (ModelState.IsValid)
             {
+                vlasnik.Prihodi = 0.0;
                 _context.Add(vlasnik);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View(vlasnik);
         }
