@@ -19,6 +19,11 @@ namespace EParking.Models
         [Required]
         [Display(Name = "Chassis number")]
         public string BrojSasije { get; set; }
+
+        [Required]
+
+        public DateTime DatumRegistracije { get; set; }
+        
         [Required]
                 
         [Display(Name = "Engine number")]

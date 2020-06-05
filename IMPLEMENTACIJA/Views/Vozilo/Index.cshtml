@@ -25,6 +25,9 @@
                 @Html.DisplayNameFor(model => model.BrojMotora)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DatumRegistracije)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Korisnik)
             </th>
             <th></th>
@@ -44,6 +47,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BrojMotora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumRegistracije)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Korisnik.ImePrezime)

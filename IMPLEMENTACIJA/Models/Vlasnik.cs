@@ -15,6 +15,7 @@ namespace EParking.Models
         [Required]
         public string Password { get; set; }
         [Required]
+        [Display(Name = "Ime i prezime")]
         public string ImePrezime { get; set; }
         [Required]
         public double Prihodi { get; set; }

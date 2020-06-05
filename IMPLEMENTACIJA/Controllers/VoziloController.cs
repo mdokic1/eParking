@@ -62,6 +62,7 @@ namespace EParkingOOAD.Controllers
             {
                 Clan data = Newtonsoft.Json.JsonConvert.DeserializeObject<Clan>((string)TempData["mydata"]);
                 vozilo.KorisnikId = data.ID;
+                vozilo.DatumRegistracije = DateTime.Now;
                 
                 _context.Add(vozilo);
 
@@ -107,7 +108,7 @@ namespace EParkingOOAD.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ModelAuta", "BrojTablice", "BrojSasije", "BrojMotora", "KorisnikId")] Vozilo vozilo)
+        public async Task<IActionResult> Edit(int id, [Bind("ModelAuta", "BrojTablice", "BrojSasije", "BrojMotora", "DatumRegistracije", "KorisnikId")] Vozilo vozilo)
         {
             vozilo.ID = id;
             

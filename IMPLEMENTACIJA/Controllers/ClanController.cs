@@ -44,16 +44,38 @@ namespace EParkingOOAD.Controllers
 
         public IActionResult Account(string username, string password)
         {
-            List<Korisnik> korisnici = _context.Korisnik.ToList();
+            List<Clan> clanovi = _context.Clan.ToList();
             List<Vozilo> vozila = _context.Vozilo.ToList();
-            foreach(var k in korisnici)
+            foreach(var k in clanovi)
             {
                 if(k.Username == username && k.Password == password)
                 {
+             
                     foreach(var v in vozila)
                     {
-                        if(v.KorisnikId == k.ID)
+                        
+                        if (v.KorisnikId == k.ID)
                         {
+                            if (k.StatusClanarine == StatusClanarine.ACTIVE && k.TipClanarine == TipClanarine.MJESECNA)
+                            {
+                                if(DateTime.Now > v.DatumRegistracije.AddDays(30))
+                                {
+                                    k.StatusClanarine = StatusClanarine.INACTIVE;
+                                    _context.Clan.Update(k);
+                                    _context.SaveChanges();
+                                }
+                            }
+
+                            if(k.StatusClanarine == StatusClanarine.ACTIVE && k.TipClanarine == TipClanarine.GODISNJA)
+                            {
+                                if (DateTime.Now > v.DatumRegistracije.AddDays(365))
+                                {
+                                    k.StatusClanarine = StatusClanarine.INACTIVE;
+                                    _context.Clan.Update(k);
+                                    _context.SaveChanges();
+                                }
+                            }
+
                             ViewBag.Model = v.ModelAuta;
                             ViewBag.Tablice = v.BrojTablice;
                             ViewBag.Sasija = v.BrojSasije;
