@@ -1,0 +1,16 @@
+﻿body {
+}
+
+.landing-section {
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-image: url(../2011_ParkingTower20.jpg);
+}
+.landing-section-contact {
+    background-image: url(../2011_ParkingTower.jpg);
+}
+
+.logo h1 {
+    font-size: 50px;
+}

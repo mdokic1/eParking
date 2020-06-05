@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EParking</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -28,11 +29,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="EParking" asp-action="Map">Map</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="EParking" asp-action="Administrator">Administrator</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+ 
+        
+     
+ 
+
     <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
