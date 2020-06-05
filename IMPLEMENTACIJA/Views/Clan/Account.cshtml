@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Account Clan";
 }
+
+
+
+<div class="landing-section">
     <head>
         <style>
 
@@ -117,99 +121,99 @@
                 font-weight: 600;
                 color: #0062cc;
             }
-
         </style>
-        
+
     </head>
 
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
 
-<div class="container emp-profile">
-    <form method="get" form asp-action="Edit" asp-route-id="@Model.ID">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
+    <div class="container emp-profile">
+        <form method="get" form asp-action="Edit" asp-route-id="@Model.ID">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
 
-                    <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
-                    <h5>
-                        @Model.ImePrezime
-                    </h5>
+                        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
+                        <h5>
+                            @Model.ImePrezime
+                        </h5>
 
 
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="profile-head">
-                    <h3>
-                        Dobrodošli @Model.ImePrezime!
-                    </h3>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                                      
-                    
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Korisnik</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Vozilo</a>
-                        </li>
-                    </ul>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <h3>
+                            Dobrodošli @Model.ImePrezime!
+                        </h3>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Korisnik</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Vozilo</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            
+
                 <div class="col-md-2">
                     <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
                 </div>
-            
-            
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work">
-                    
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-work">
+
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h5>
+                                Status članarine: @Model.StatusClanarine
+                            </h5>
+                            <h5>
+                                Username: @Model.Username
+                            </h5>
+                            <h5>
+                                Email: @Model.Email
+                            </h5>
+                            <h5>
+                                Adresa: @Model.Adresa
+                            </h5>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <h5>
+                                Model auta: @ViewBag.Model
+                            </h5>
+                            <h5>
+                                Registarske tablice: @ViewBag.Tablice
+                            </h5>
+                            <h5>
+                                Broj šasije: @ViewBag.Sasija
+                            </h5>
+                            <h5>
+                                Broj motora: @ViewBag.Motor
+                            </h5>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <h5>
-                            Status članarine: @Model.StatusClanarine
-                        </h5>
-                        <h5>
-                            Username: @Model.Username
-                        </h5>
-                        <h5>
-                            Email: @Model.Email
-                        </h5>
-                        <h5>
-                            Adresa: @Model.Adresa
-                        </h5>
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <h5>
-                            Model auta: @ViewBag.Model
-                        </h5>
-                        <h5>
-                            Registarske tablice: @ViewBag.Tablice
-                        </h5>
-                        <h5>
-                            Broj šasije: @ViewBag.Sasija
-                        </h5>
-                        <h5>
-                            Broj motora: @ViewBag.Motor
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </form>
+        </form>
+    </div>
 </div>

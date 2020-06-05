@@ -5,67 +5,71 @@
 }
 
 
-<hr />
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Edit</div>
-                <div class="card-body">
+<div class="landing-section">
 
-                    <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="ID" />
-                        <input type="hidden" asp-for="RezervisanoParkingMjesto" />
-                        <input type="hidden" asp-for="TipClanarine" />
-                        <input type="hidden" asp-for="StatusClanarine" />
-                        <div class="form-group">
-                            <label asp-for="ImePrezime" class="control-label"></label>
-                            <input asp-for="ImePrezime" class="form-control" />
-                            <span asp-validation-for="ImePrezime" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Username" class="control-label"></label>
-                            <input asp-for="Username" class="form-control" />
-                            <span asp-validation-for="Username" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="JMBG" class="control-label"></label>
-                            <input asp-for="JMBG" class="form-control" />
-                            <span asp-validation-for="JMBG" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Adresa" class="control-label"></label>
-                            <input asp-for="Adresa" class="form-control" />
-                            <span asp-validation-for="Adresa" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="BrojMobitela" class="control-label"></label>
-                            <input asp-for="BrojMobitela" class="form-control" />
-                            <span asp-validation-for="BrojMobitela" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
+    <hr />
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Edit</div>
+                    <div class="card-body">
 
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                        </div>
-                    </form>
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="ID" />
+                            <input type="hidden" asp-for="RezervisanoParkingMjesto" />
+                            <input type="hidden" asp-for="TipClanarine" />
+                            <input type="hidden" asp-for="StatusClanarine" />
+                            <div class="form-group">
+                                <label asp-for="ImePrezime" class="control-label"></label>
+                                <input asp-for="ImePrezime" class="form-control" />
+                                <span asp-validation-for="ImePrezime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Username" class="control-label"></label>
+                                <input asp-for="Username" class="form-control" />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="JMBG" class="control-label"></label>
+                                <input asp-for="JMBG" class="form-control" />
+                                <span asp-validation-for="JMBG" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Adresa" class="control-label"></label>
+                                <input asp-for="Adresa" class="form-control" />
+                                <span asp-validation-for="Adresa" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BrojMobitela" class="control-label"></label>
+                                <input asp-for="BrojMobitela" class="form-control" />
+                                <span asp-validation-for="BrojMobitela" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     </div>
+
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
