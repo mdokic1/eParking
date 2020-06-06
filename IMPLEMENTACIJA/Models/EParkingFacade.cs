@@ -15,7 +15,10 @@ namespace EParking.Models
         public Administrator Administrator { get; set; }
         public List<ParkingLokacija> Parkinzi { get; set; }
 
-        private EParkingFacade() { }
+        private EParkingFacade() 
+        {
+            HistorijaTransakcija = new List<Transakcija>();
+        }
         public static EParkingFacade Instance
         {
             get

@@ -148,7 +148,7 @@
             }
 
             let price = 0.0;
-            let parkingPrice = @Html.Raw(Model.Cjenovnik.DnevnaCijenaSat);
+            let parkingPrice = @Html.Raw(ViewBag.Cijena);
             let intervalPriceValue = parkingPrice / 60.0;
 
             function priceChange() {

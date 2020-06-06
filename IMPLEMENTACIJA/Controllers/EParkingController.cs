@@ -17,6 +17,25 @@ namespace EParking.Controllers
         {
             _context = context;
         }
+
+        public double PrilagodiCijenu(double dnevnaCijena, double nocnaCijena)
+        {
+            TimeSpan nightStart = new TimeSpan(22, 0, 0);
+            TimeSpan nightEnd = new TimeSpan(07, 0, 0);
+            if (nightStart < nightEnd)
+            {
+                if (nightStart <= DateTime.Now.TimeOfDay && DateTime.Now.TimeOfDay <= nightEnd)
+                {
+                    return nocnaCijena;
+                }
+                return dnevnaCijena;
+            }
+            else if (!(nightEnd < DateTime.Now.TimeOfDay && DateTime.Now.TimeOfDay < nightStart))
+            {
+                return nocnaCijena;
+            }
+            return dnevnaCijena;
+        }
         public IActionResult Map()
         {
             EParkingFacade.Instance.Parkinzi = _context.ParkingLokacija.ToList();
@@ -44,7 +63,7 @@ namespace EParking.Controllers
                 //ISPRAVI TO KASNIJE!!!
                 markeri += string.Format("'naziv': '{0}',", parking.Naziv);
                 markeri += string.Format("'adresa': '{0}',", parking.Adresa);
-                markeri += string.Format("'cijena': '{0}',", parking.Cjenovnik.DnevnaCijenaSat);
+                markeri += string.Format("'cijena': '{0}',", PrilagodiCijenu(parking.Cjenovnik.DnevnaCijenaSat, parking.Cjenovnik.NocnaCijenaSat));
                 markeri += string.Format("'slobodnaMjesta': '{0}',", parking.BrojSlobodnihMjesta);
                 markeri += string.Format("'kapacitet': '{0}'", parking.Kapacitet);
                 if (vel < EParkingFacade.Instance.Parkinzi.Count - 1)
@@ -89,6 +108,7 @@ namespace EParking.Controllers
             //-----------------------------------------------
 
             //otvaramo Timer view odmah
+            TempData["cijena"] = Newtonsoft.Json.JsonConvert.SerializeObject(PrilagodiCijenu(odredisnaParkingLokacija.Cjenovnik.DnevnaCijenaSat, odredisnaParkingLokacija.Cjenovnik.NocnaCijenaSat));
             return RedirectToAction("Timer", "EParking", odredisnaParkingLokacija);
         }
 
@@ -103,12 +123,30 @@ namespace EParking.Controllers
                     odredisnaParkingLokacija.Cjenovnik = c;
                 }
             }
+            ViewBag.Cijena = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["cijena"]);
+            Transakcija novaTransakcija = new Transakcija();
+            novaTransakcija.VrijemeDolaska = DateTime.Now;
+            novaTransakcija.ParkingLokacijaId = odredisnaParkingLokacija.ID;
+            novaTransakcija.ParkingLokacija = odredisnaParkingLokacija;
+            EParkingFacade.Instance.HistorijaTransakcija.Add(novaTransakcija);
             return View(odredisnaParkingLokacija);
         }
         
         [HttpPost]
         public async Task<IActionResult> TimerAsync(double iznos, ParkingLokacija parkingLokacija)
         {
+            //dodaj transakciju
+            foreach (var t in EParkingFacade.Instance.HistorijaTransakcija)
+            {
+                if (t.ParkingLokacija.ID.Equals(parkingLokacija.ID))
+                {
+                    t.VrijemeOdlaska = DateTime.Now;
+                    t.Iznos = iznos;
+                    _context.Transakcija.Add(t);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             //oslobodi zauzeto mjesto na parkingu
             foreach (var p in EParkingFacade.Instance.Parkinzi)
             {
