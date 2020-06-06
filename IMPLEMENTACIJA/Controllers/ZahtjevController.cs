@@ -97,12 +97,21 @@ namespace EParkingOOAD.Controllers
                 if(temp.VlasnikId == v.ID)
                 {
                     ViewBag.Vlasnik = v;
-                    return RedirectToAction("Account", "Vlasnik", v);
+                    //return RedirectToAction("Account", "Vlasnik", v);
+                    return RedirectToAction("EMail", temp);
                     //return View(zahtjev);
                 }
             }
 
             return View(temp);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EMail(Zahtjev zahtjev)
+        {
+            /*List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            foreach*/
+           return View();
         }
 
         public async Task<IActionResult> OdbijanjeZahtjeva(int? id)

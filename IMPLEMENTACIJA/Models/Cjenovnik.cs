@@ -19,6 +19,6 @@ namespace EParking.Models
         public double CijenaGodisnjeKarte { get; set; }
         [Required]
         public double Popust { get; set; }
-        public virtual ICollection<ParkingLokacija> ParkingLokacije { get; set; }
+        
     }
 }
