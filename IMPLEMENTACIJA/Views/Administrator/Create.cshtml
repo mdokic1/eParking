@@ -1,22 +1,20 @@
-﻿@model EParking.Models.Vlasnik
+﻿@model Administrator
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
+
 
 <hr />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Izmjena</div>
+                <div class="card-header">Registracija</div>
                 <div class="card-body">
 
-                    <form asp-action="Edit">
-
+                    <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="ID" />
-                        <input type="hidden" asp-for="Prihodi" />
                         <div class="form-group">
                             <label asp-for="Username" class="control-label"></label>
                             <input asp-for="Username" class="form-control" />
@@ -27,13 +25,8 @@
                             <input asp-for="Password" class="form-control" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="ImePrezime" class="control-label"></label>
-                            <input asp-for="ImePrezime" class="form-control" />
-                            <span asp-validation-for="ImePrezime" class="text-danger"></span>
-                        </div>
                         <div class="row justify-content-center">
-                            <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+                            <input type="submit" value="Potvrdi" class="btn btn-primary" />
                         </div>
                     </form>
                 </div>
@@ -42,7 +35,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

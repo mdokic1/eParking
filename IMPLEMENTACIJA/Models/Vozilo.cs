@@ -11,25 +11,26 @@ namespace EParking.Models
         [ScaffoldColumn(false)]
         public int ID { get; set; }
         [Required]
-        [Display(Name = "Car model")]
+        [Display(Name = "Model auta")]
         public string ModelAuta { get; set; }
         [Required]
-        [Display(Name = "Licence plate")]
+        [Display(Name = "Registarske tablice")]
         public string BrojTablice { get; set; }
         [Required]
-        [Display(Name = "Chassis number")]
+        [Display(Name = "Broj šasije")]
         public string BrojSasije { get; set; }
 
         [Required]
 
+        [Display(Name = "Datum registracije")]
         public DateTime DatumRegistracije { get; set; }
         
         [Required]
                 
-        [Display(Name = "Engine number")]
+        [Display(Name = "Broj motora")]
         public string BrojMotora { get; set; }
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "Ime vlasnika")]
         //[Compare(Korisnik.ImePrezime)]
         public int KorisnikId { get; set; }
         public virtual Korisnik Korisnik { get; set; }

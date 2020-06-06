@@ -10,12 +10,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Edit</div>
+                <div class="card-header">Izmjena</div>
                 <div class="card-body">
 
                     <form asp-action="Edit">
 
                         <input type="hidden" asp-for="ID" />
+                        <input type="hidden" asp-for="BrojSlobodnihMjesta" />
                         <div class="form-group">
                             <label asp-for="Naziv" class="control-label"></label>
                             <input asp-for="Naziv" class="form-control" />
@@ -42,22 +43,17 @@
                             <span asp-validation-for="Kapacitet" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="BrojSlobodnihMjesta" class="control-label"></label>
-                            <input asp-for="BrojSlobodnihMjesta" class="form-control" />
-                            <span asp-validation-for="BrojSlobodnihMjesta" class="text-danger"></span>
+                            <label asp-for="VlasnikId" class="control-label"></label>
+                            <select asp-for="VlasnikId" class="form-control" asp-items="ViewBag.VlasnikId"></select>
+                            <span asp-validation-for="VlasnikId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="CjenovnikId" class="control-label"></label>
                             <select asp-for="CjenovnikId" class="form-control" asp-items="ViewBag.CjenovnikId"></select>
                             <span asp-validation-for="CjenovnikId" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="VlasnikId" class="control-label"></label>
-                            <select asp-for="VlasnikId" class="form-control" asp-items="ViewBag.VlasnikId"></select>
-                            <span asp-validation-for="VlasnikId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                        <div class="row justify-content-center">
+                            <input type="submit" value="Sačuvaj" class="btn btn-primary" />
                         </div>
                     </form>
                 </div>
