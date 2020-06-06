@@ -72,8 +72,6 @@ namespace EParking.Controllers
                 double lng = parking.Long;
                 markeri += String.Format("'lat': '{0}',", lat.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 markeri += String.Format("'lng': '{0}',", lng.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                //cijena po satu nije kako treba spasena u parking lokaciji u bazi pa zato ovo
-                //ISPRAVI TO KASNIJE!!!
                 markeri += string.Format("'naziv': '{0}',", parking.Naziv);
                 markeri += string.Format("'adresa': '{0}',", parking.Adresa);
                 markeri += string.Format("'cijena': '{0}',", PrilagodiCijenu(parking.Cjenovnik.DnevnaCijenaSat, parking.Cjenovnik.NocnaCijenaSat));
@@ -91,13 +89,24 @@ namespace EParking.Controllers
             }
             markeri += "];";
             ViewBag.Markeri = markeri;
-            //JOS FALI DA NAMJESTIS UKOLIKO JE KORISNIK KOJI KLIKA CLAN DA PRIKAZE NJEGOV PARKING
-            //A UKOLIKO JE GOST DA PRIKAZE NAJBLIZI PARKING OD NJEGOVE TRENUTNE LOKACIJE
-            //true -- najblizi parking
-            //false -- rezrvisani parking
-            ViewBag.NajbliziParking = "'true';";
-            ViewBag.Latitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(2).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (EParkingFacade.ClanSignedIn())
+            {
+                ViewBag.NajbliziParking = "'false';";
+                foreach (var p in EParkingFacade.Instance.Parkinzi)
+                {
+                    if (p.ID == EParkingFacade.Clan.RezervisanoParkingMjesto)
+                    {
+                        ViewBag.Latitude = p.Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        ViewBag.Longitude = p.Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.NajbliziParking = "'true';";
+                ViewBag.Latitude = EParkingFacade.Instance.Parkinzi.ElementAt(0).Lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                ViewBag.Longitude = EParkingFacade.Instance.Parkinzi.ElementAt(0).Long.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            }
             return View(EParkingFacade.Instance);
         }
 
@@ -147,9 +156,18 @@ namespace EParking.Controllers
         [HttpPost]
         public async Task<IActionResult> TimerAsync(double iznos, ParkingLokacija parkingLokacija)
         {
-            //uzimanje vozila PROBA SAMO
+            //pronalazak odgovarajućeg vozila
+            //postavljamo default vrijednost vozila ako se radi o Gostu
             Vozilo vozilo = _context.Vozilo.ToList().ElementAt(0);
-            //
+            foreach (var v in _context.Vozilo.ToList())
+            {
+                if (EParkingFacade.ClanSignedIn() && v.KorisnikId == EParkingFacade.Clan.ID)
+                {
+                    vozilo = v;
+                    break;
+                }
+            }
+            //-------------------------------
 
             //dodaj transakciju
             foreach (var t in EParkingFacade.Instance.HistorijaTransakcija)
@@ -158,7 +176,7 @@ namespace EParking.Controllers
                 {
                     t.VrijemeOdlaska = DateTime.Now;
                     t.Iznos = iznos;
-                    t.VoziloId = vozilo.ID; //proba
+                    t.VoziloId = vozilo.ID;
                     _context.Transakcija.Add(t);
                     await _context.SaveChangesAsync();
                 }
@@ -246,6 +264,7 @@ namespace EParking.Controllers
                         if(v.KorisnikId == k.ID)
                         {
                             //TempData["v"] = Newtonsoft.Json.JsonConvert.SerializeObject(v);
+                            EParkingFacade.Clan = (Clan)k;
                             return RedirectToAction("Account", "Clan", k);
                         }
                     }
@@ -258,6 +277,7 @@ namespace EParking.Controllers
                 if (v.Username == username && v.Password == password)
                 {
                     pronadjeno = true;
+                    EParkingFacade.Vlasnik = v;
                     return RedirectToAction("Account", "Vlasnik", v);
                 }
             }
@@ -267,6 +287,7 @@ namespace EParking.Controllers
                 if (a.Username == username && a.Password == password)
                 {
                     pronadjeno = true;
+                    EParkingFacade.Administrator = a;
                     return RedirectToAction("Account", "Administrator");
                 }
             }

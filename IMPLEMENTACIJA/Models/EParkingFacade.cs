@@ -8,16 +8,18 @@ namespace EParking.Models
     public class EParkingFacade
     {
         private static readonly EParkingFacade INSTANCE = new EParkingFacade();
-        public List<Gost> Gosti { get; set; }
-        public List<Clan> Clanovi { get; set; }
-        public List<Vlasnik> Vlasnici { get; set; }
+        public static Administrator Administrator { get; set; }
+        public static Clan Clan { get; set; }
+        public static Vlasnik Vlasnik { get; set; }
         public List<Transakcija> HistorijaTransakcija { get; set; }
-        public Administrator Administrator { get; set; }
         public List<ParkingLokacija> Parkinzi { get; set; }
 
         private EParkingFacade() 
         {
             HistorijaTransakcija = new List<Transakcija>();
+            Administrator = null;
+            Clan = null;
+            Vlasnik = null;
         }
         public static EParkingFacade Instance
         {
@@ -25,6 +27,18 @@ namespace EParking.Models
             {
                 return INSTANCE;
             }
+        }
+        public static bool ClanSignedIn()
+        {
+            return EParkingFacade.Clan != null;
+        }
+        public static bool VlasnikSignedIn()
+        {
+            return EParkingFacade.Vlasnik != null;
+        }
+        public static bool AdminSignedIn()
+        {
+            return EParkingFacade.Administrator != null;
         }
     }
 }

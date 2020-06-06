@@ -4,70 +4,70 @@
     ViewData["Title"] = "EParking";
 }
 
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <style>
-            /* Set the size of the div element that contains the map */
-            #map {
-                height: 800px;
-                width: 100%;
-            }
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 800px;
+            width: 100%;
+        }
 
-            .container-fluid {
-                position: relative;
-            }
+        .container-fluid {
+            position: relative;
+        }
 
-            #btnRoute {
-                position: absolute;
-                top: 120px;
-                right: 25px;
-                width: 100px;
-                height: 100px;
-            }
+        #btnRoute {
+            position: absolute;
+            top: 120px;
+            right: 25px;
+            width: 100px;
+            height: 100px;
+        }
 
-            #btnClearRoute {
-                position: absolute;
-                top: 350px;
-                right: 25px;
-                width: 100px;
-                height: 100px;
-            }
+        #btnClearRoute {
+            position: absolute;
+            top: 350px;
+            right: 25px;
+            width: 100px;
+            height: 100px;
+        }
 
-            #btnUlazak {
-                position: absolute;
-                top: 235px;
-                right: 25px;
-                width: 100px;
-                height: 100px;
-                font-family: FontAwesome;
-                font-size: 25px;
-            }
-        </style>
-        <script src="https://kit.fontawesome.com/3874a11e93.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
+        #btnUlazak {
+            position: absolute;
+            top: 235px;
+            right: 25px;
+            width: 100px;
+            height: 100px;
+            font-family: FontAwesome;
+            font-size: 25px;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/3874a11e93.js" crossorigin="anonymous"></script>
+</head>
+<body>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div id="map"></div>
-                <button id="btnRoute" type="button" class="btn btn-secondary btn-lg" onclick="calculateAndShowRoute()">
-                    <i class="fas fa-route fa-2x"></i>
-                </button>
-                <!--Hidden fileds so I can send data-->
-                <form asp-action="Map" method="post">
-                    <div class="form-group">
-                        <input id="lat" name="lat" type="hidden" value="" />
-                        <input id="lon" name="lon" type="hidden" value="" />
-                        <input id="btnUlazak" type="submit" class="btn btn-secondary btn-lg" value="&#xf1b9 &#xf090"/>
-                    </div>
-                </form>
-                <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">
-                    <i class="fas fa-trash-alt fa-2x"></i>
-                </button>
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map"></div>
+            <button id="btnRoute" type="button" class="btn btn-secondary btn-lg" onclick="calculateAndShowRoute()">
+                <i class="fas fa-route fa-2x"></i>
+            </button>
+            <!--Hidden fileds so I can send data-->
+            <form asp-action="Map" method="post">
+                <div class="form-group">
+                    <input id="lat" name="lat" type="hidden" value="" />
+                    <input id="lon" name="lon" type="hidden" value="" />
+                    <input id="btnUlazak" type="submit" class="btn btn-secondary btn-lg" value="&#xf1b9 &#xf090" />
+                </div>
+            </form>
+            <button id="btnClearRoute" type="button" class="btn btn-danger btn-lg" onclick="removeRoute()">
+                <i class="fas fa-trash-alt fa-2x"></i>
+            </button>
         </div>
+    </div>
 
-        <script>
+    <script>
             var parkinzi = @Html.Raw(ViewBag.Markeri);
             var najbliziParking = @Html.Raw(ViewBag.NajbliziParking);
             var odredisniLat, odredisniLon;
@@ -142,7 +142,7 @@
                                 }
                             }
                             if (brojac == 0 && parkinzi[0].slobodnaMjesta == 0) {
-                                swal("Nema slobodnih mjesta", "Trenutno su svi parkinzi popunjeni do svog maksimalnog kapaciteta. Molimo pričekajte slobodno mjesto i osvježavajte stranicu.", "error");
+                                swal("Nema slobodnih mjesta", "Trenutno su svi parkinzi popunjeni do svog maksimalnog kapaciteta. Molimo prièekajte slobodno mjesto i osvježavajte stranicu.", "error");
                                 document.getElementById("btnUlazak").disabled = false;
                             } else {
                                 request = {
@@ -196,13 +196,13 @@
                 return Math.sqrt(x * x + y * y) * R;
             }
 
-        </script>
+    </script>
 
 
 
 
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        @*<script type="text/javascript">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    @*<script type="text/javascript">
             $(function () {
                 $('#btnUlazak').click(function () {
                     //$.post("/EParking/SpasiKoordinate", {
@@ -216,14 +216,13 @@
         </script>*@
 
 
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBd7K5-Z6imkbJEje_G9aPqEL65uUiOFfc&callback=initMap">
-        </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBd7K5-Z6imkbJEje_G9aPqEL65uUiOFfc&callback=initMap">
+    </script>
 
 
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    </body>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
