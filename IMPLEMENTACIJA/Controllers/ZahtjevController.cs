@@ -97,8 +97,8 @@ namespace EParkingOOAD.Controllers
                 if(temp.VlasnikId == v.ID)
                 {
                     ViewBag.Vlasnik = v;
-                    //return RedirectToAction("Account", "Vlasnik", v);
-                    return RedirectToAction("EMail", temp);
+                    return RedirectToAction("Account", "Vlasnik", v);
+                    //return RedirectToAction("EMail", temp);
                     //return View(zahtjev);
                 }
             }

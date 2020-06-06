@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using EParking.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EParking.Controllers
 {
@@ -40,6 +42,7 @@ namespace EParking.Controllers
         {
             EParkingFacade.Instance.Parkinzi = _context.ParkingLokacija.ToList();
             List<Cjenovnik> Cjenovnici = _context.Cjenovnik.ToList();
+            List<Vlasnik> Vlasnici = _context.Vlasnik.ToList();
             foreach (var p in EParkingFacade.Instance.Parkinzi)
             {
                 foreach (var c in Cjenovnici)
@@ -47,6 +50,16 @@ namespace EParking.Controllers
                     if (p.CjenovnikId == c.ID)
                     {
                         p.Cjenovnik = c;
+                    }
+                }
+            }
+            foreach (var p in EParkingFacade.Instance.Parkinzi)
+            {
+                foreach (var v in Vlasnici)
+                {
+                    if (v.ID == p.VlasnikId)
+                    {
+                        p.Vlasnik = v;
                     }
                 }
             }
@@ -127,9 +140,6 @@ namespace EParking.Controllers
             Transakcija novaTransakcija = new Transakcija();
             novaTransakcija.VrijemeDolaska = DateTime.Now;
             novaTransakcija.ParkingLokacijaId = odredisnaParkingLokacija.ID;
-            novaTransakcija.ParkingLokacija = odredisnaParkingLokacija;
-            novaTransakcija.VoziloId = -1;
-            novaTransakcija.Vozilo = new Vozilo();
             EParkingFacade.Instance.HistorijaTransakcija.Add(novaTransakcija);
             return View(odredisnaParkingLokacija);
         }
@@ -144,16 +154,16 @@ namespace EParking.Controllers
             //dodaj transakciju
             foreach (var t in EParkingFacade.Instance.HistorijaTransakcija)
             {
-                if (t.ParkingLokacija.ID.Equals(parkingLokacija.ID))
+                if (t.ParkingLokacijaId == parkingLokacija.ID)
                 {
                     t.VrijemeOdlaska = DateTime.Now;
                     t.Iznos = iznos;
                     t.VoziloId = vozilo.ID; //proba
-                    t.Vozilo = vozilo; //proba
                     _context.Transakcija.Add(t);
                     await _context.SaveChangesAsync();
                 }
             }
+            //--------------------
 
             //oslobodi zauzeto mjesto na parkingu
             foreach (var p in EParkingFacade.Instance.Parkinzi)
@@ -166,7 +176,7 @@ namespace EParking.Controllers
             }
             parkingLokacija.BrojSlobodnihMjesta += 1;
             _context.Update(parkingLokacija);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             //-----------------------------------
 
             TempData["iznos"] = Newtonsoft.Json.JsonConvert.SerializeObject(iznos);
@@ -206,8 +216,8 @@ namespace EParking.Controllers
         }
 
         public IActionResult Pay()
-        {
-            ViewBag.Iznos = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["iznos"]);
+        {            
+            ViewBag.Iznos = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["iznos"]); 
             TempData["prihodi"] = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Iznos);
             return View();
         }

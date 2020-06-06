@@ -1,0 +1,48 @@
+﻿@model EParking.Models.Transakcija
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Transakcija</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VrijemeDolaska" class="control-label"></label>
+                <input asp-for="VrijemeDolaska" class="form-control" />
+                <span asp-validation-for="VrijemeDolaska" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VrijemeOdlaska" class="control-label"></label>
+                <input asp-for="VrijemeOdlaska" class="form-control" />
+                <span asp-validation-for="VrijemeOdlaska" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Iznos" class="control-label"></label>
+                <input asp-for="Iznos" class="form-control" />
+                <span asp-validation-for="Iznos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParkingLokacijaId" class="control-label"></label>
+                <select asp-for="ParkingLokacijaId" class ="form-control" asp-items="ViewBag.ParkingLokacijaId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoziloId" class="control-label"></label>
+                <select asp-for="VoziloId" class ="form-control" asp-items="ViewBag.VoziloId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

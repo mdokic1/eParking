@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EParking.Models;
+using Newtonsoft.Json;
+using EParkingOOAD.ViewModel;
 
 namespace EParkingOOAD.Controllers
 {
@@ -22,6 +24,49 @@ namespace EParkingOOAD.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Vlasnik.ToListAsync());
+        }
+
+        public bool IdeUDanGraf(DateTime date)
+        {
+            return date.Date == DateTime.Today;
+        }
+
+        public bool IdeUMjesecGraf(DateTime date)
+        {
+            return DateTime.Now.AddDays(-30).CompareTo(date) < 0;
+        }
+
+        public void NapuniGrafovePodacima(Vlasnik v)
+        {
+            JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+            List<Tacka> VrijednostiDan = new List<Tacka>();
+            List<Tacka> VrijednostiMjesec = new List<Tacka>();
+            int i = 1, j = 1, parkingLokacijaID = 0;
+            foreach (var p in _context.ParkingLokacija.ToList())
+            {
+                if (p.VlasnikId == v.ID)
+                {
+                    parkingLokacijaID = p.ID;
+                    foreach (var t in _context.Transakcija.ToList())
+                    {
+                        if (t.ParkingLokacijaId == parkingLokacijaID)
+                        {
+                            if (IdeUDanGraf(t.VrijemeDolaska))
+                            {
+                                VrijednostiDan.Add(new Tacka(i, t.Iznos));
+                                i++;
+                            }
+                            if (IdeUMjesecGraf(t.VrijemeDolaska))
+                            {
+                                VrijednostiMjesec.Add(new Tacka(j, t.Iznos));
+                                j++;
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.DataPointsDan = JsonConvert.SerializeObject(VrijednostiDan, _jsonSetting);
+            ViewBag.DataPointsMjesec = JsonConvert.SerializeObject(VrijednostiMjesec, _jsonSetting);
         }
 
         public IActionResult Account(string username, string password)
@@ -41,6 +86,7 @@ namespace EParkingOOAD.Controllers
                         }
                     }
                     ViewBag.zahtjevi = odgovarajuci;
+                    NapuniGrafovePodacima(v);
                     return View(v);
                 }
             }
