@@ -4,53 +4,53 @@
     ViewData["Title"] = "Edit";
 }
 
+    <div class="landing-section">
+        <hr />
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Izmjena</div>
+                        <div class="card-body">
 
-<hr />
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Edit</div>
-                <div class="card-body">
+                            <form asp-action="Edit">
 
-                    <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ID" />
+                                <input type="hidden" asp-for="DatumRegistracije" />
+                                <input type="hidden" asp-for="KorisnikId" />
+                                <div class="form-group">
+                                    <label asp-for="ModelAuta" class="control-label"></label>
+                                    <input asp-for="ModelAuta" class="form-control" />
+                                    <span asp-validation-for="ModelAuta" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="BrojTablice" class="control-label"></label>
+                                    <input asp-for="BrojTablice" class="form-control" />
+                                    <span asp-validation-for="BrojTablice" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="BrojSasije" class="control-label"></label>
+                                    <input asp-for="BrojSasije" class="form-control" />
+                                    <span asp-validation-for="BrojSasije" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="BrojMotora" class="control-label"></label>
+                                    <input asp-for="BrojMotora" class="form-control" />
+                                    <span asp-validation-for="BrojMotora" class="text-danger"></span>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <input type="submit" value="Sačuvaj" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="ID" />
-                        <input type="hidden" asp-for="DatumRegistracije" />
-                        <input type="hidden" asp-for="KorisnikId" />
-                        <div class="form-group">
-                            <label asp-for="ModelAuta" class="control-label"></label>
-                            <input asp-for="ModelAuta" class="form-control" />
-                            <span asp-validation-for="ModelAuta" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="BrojTablice" class="control-label"></label>
-                            <input asp-for="BrojTablice" class="form-control" />
-                            <span asp-validation-for="BrojTablice" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="BrojSasije" class="control-label"></label>
-                            <input asp-for="BrojSasije" class="form-control" />
-                            <span asp-validation-for="BrojSasije" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="BrojMotora" class="control-label"></label>
-                            <input asp-for="BrojMotora" class="form-control" />
-                            <span asp-validation-for="BrojMotora" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                        </div>
-                    </form>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-</div>
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
