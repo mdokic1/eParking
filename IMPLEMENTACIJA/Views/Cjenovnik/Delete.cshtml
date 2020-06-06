@@ -3,56 +3,57 @@
 @{
     ViewData["Title"] = "Delete";
 }
+    <div class="landing-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Brisanje</div>
+                        <div class="card-body">
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Brisanje</div>
-                    <div class="card-body">
+                            <form asp-action="Obrada">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="row justify-content-left">
+                                    <h5>Naziv: @Model.Naziv</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Dnevna cijena po satu: @Model.DnevnaCijenaSat</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Noćna cijena po satu: @Model.NocnaCijenaSat</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Cijena mjesečne članarine: @Model.CijenaMjesecneKarte</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Cijena godišnje članarine: @Model.CijenaGodisnjeKarte</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Popust: @Model.Popust</h5>
+                                </div>
 
-                        <form asp-action="Obrada">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="row justify-content-left">
-                                <h5>Naziv: @Model.Naziv</h5>
+                                <br />
+                                <br />
+
+                            </form>
+                        </div>
+
+                        <form asp-action="Delete">
+                            <div class="row justify-content-center">
+                                <input type="hidden" asp-for="ID" />
+                                <input type="submit" value="Obriši" class="btn btn-danger" /> &nbsp; &nbsp; | &nbsp; &nbsp;
+                                <a asp-action="Index">Nazad</a>
                             </div>
-                            <div class="row justify-content-left">
-                                <h5>Dnevna cijena po satu: @Model.DnevnaCijenaSat</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Noćna cijena po satu: @Model.NocnaCijenaSat</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Cijena mjesečne članarine: @Model.CijenaMjesecneKarte</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Cijena godišnje članarine: @Model.CijenaGodisnjeKarte</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Popust: @Model.Popust</h5>
-                            </div>
-                            
-                            <br />
-                            <br />
 
                         </form>
                     </div>
 
-                    <form asp-action="Delete">
-                        <div class="row justify-content-center">
-                            <input type="hidden" asp-for="ID" />
-                            <input type="submit" value="Obriši" class="btn btn-danger" /> &nbsp; &nbsp; | &nbsp; &nbsp;
-                            <a asp-action="Index">Nazad</a>
-                        </div>
-
-                    </form>
                 </div>
-
             </div>
+
+
         </div>
 
 
-    </div>
-    
-    
 
+</div>

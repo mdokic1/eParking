@@ -4,59 +4,60 @@
     ViewData["Title"] = "Delete";
 }
 
+    <div class="landing-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Brisanje</div>
+                        <div class="card-body">
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Brisanje</div>
-                    <div class="card-body">
+                            <form asp-action="Obrada">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="row justify-content-left">
+                                    <h5>Naziv: @Model.Naziv</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Adresa: @Model.Adresa</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Lat: @Model.Lat</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Long: @Model.Long</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Kapacitet: @Model.Kapacitet</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Broj slobodnih mjesta: @Model.BrojSlobodnihMjesta</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Naziv: @Model.Cjenovnik.Naziv</h5>
+                                </div>
+                                <div class="row justify-content-left">
+                                    <h5>Ime vlasnika: @Model.Vlasnik.ImePrezime</h5>
+                                </div>
 
-                        <form asp-action="Obrada">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="row justify-content-left">
-                                <h5>Naziv: @Model.Naziv</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Adresa: @Model.Adresa</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Lat: @Model.Lat</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Long: @Model.Long</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Kapacitet: @Model.Kapacitet</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Broj slobodnih mjesta: @Model.BrojSlobodnihMjesta</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Naziv: @Model.Cjenovnik.Naziv</h5>
-                            </div>
-                            <div class="row justify-content-left">
-                                <h5>Ime vlasnika: @Model.Vlasnik.ImePrezime</h5>
-                            </div>
+                                <br />
+                                <br />
 
-                            <br />
-                            <br />
+                            </form>
+                        </div>
+
+                        <form asp-action="Delete">
+                            <div class="row justify-content-center">
+                                <input type="hidden" asp-for="ID" />
+                                <input type="submit" value="Obriši" class="btn btn-danger" /> &nbsp; &nbsp; | &nbsp; &nbsp;
+                                <a asp-action="Index">Nazad</a>
+                            </div>
 
                         </form>
                     </div>
 
-                    <form asp-action="Delete">
-                        <div class="row justify-content-center">
-                            <input type="hidden" asp-for="ID" />
-                            <input type="submit" value="Obriši" class="btn btn-danger" /> &nbsp; &nbsp; | &nbsp; &nbsp;
-                            <a asp-action="Index">Nazad</a>
-                        </div>
-
-                    </form>
                 </div>
-
             </div>
+
+
         </div>
-
-
-    </div>
+</div>
