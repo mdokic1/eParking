@@ -267,7 +267,7 @@ namespace EParking.Controllers
                 if (a.Username == username && a.Password == password)
                 {
                     pronadjeno = true;
-                    return RedirectToAction("Index", "Administrator", a);
+                    return RedirectToAction("Account", "Administrator", a);
                 }
             }
             return View();

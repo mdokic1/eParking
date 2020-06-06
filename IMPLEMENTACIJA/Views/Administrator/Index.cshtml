@@ -143,6 +143,7 @@
             font-weight: 600;
             color: #0062cc;
         }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -167,6 +168,11 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
 </head>
 <div class="landing-section">
 
@@ -188,71 +194,8 @@
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Dobrodošli, !</h1>
                     </div>
-                    <div id="mjestoZaView" class="container-fluid">
-                        <form method="get" form asp-action="Edit" asp-route-id="@Model.ID">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="profile-img">
-
-                                        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
-                                        <h5>
-                                            @Model.Username
-                                        </h5>
-
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="profile-head">
-                                        <h3>
-                                            Dobrodošli @Model.Username!
-                                        </h3>
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-
-
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Korisnik</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Vozilo</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="profile-work">
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-8">
-                                    <div class="tab-content profile-tab" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            <h5>
-                                                Username: @Model.Username
-                                            </h5>
-                                            
-                                        </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
+                    <div id="mjestoZaView" class="container emp-profile">
+                        
                     </div>
                 </main>
 
@@ -270,5 +213,7 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
                 <script src="dashboard.js"></script>
+            </div>
+        </div>
     </body>
 </div>
