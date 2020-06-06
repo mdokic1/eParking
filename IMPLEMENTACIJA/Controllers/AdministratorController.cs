@@ -19,8 +19,16 @@ namespace EParkingOOAD.Controllers
         }
 
         // GET: Administrator
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string username, string password)
         {
+            List<Administrator> administratori = _context.Administrator.ToList();
+            foreach(var a in administratori)
+            {
+                if(a.Username == username && a.Password == password)
+                {
+                    return View(a);
+                }
+            }
             return View();
         }
 
@@ -42,8 +50,8 @@ namespace EParkingOOAD.Controllers
             return View(administrator);
         }
 
-        // GET: Administrator/adminIzgled
-        public IActionResult adminIzgled()
+        // GET: Administrator/Create
+        public IActionResult Create()
         {
             return View();
         }
@@ -59,7 +67,7 @@ namespace EParkingOOAD.Controllers
             {
                 _context.Add(administrator);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               // return RedirectToAction(nameof(Index));
             }
             return View(administrator);
         }
@@ -87,6 +95,7 @@ namespace EParkingOOAD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Username,Password")] Administrator administrator)
         {
+            administrator.ID = id;
             if (id != administrator.ID)
             {
                 return NotFound();
