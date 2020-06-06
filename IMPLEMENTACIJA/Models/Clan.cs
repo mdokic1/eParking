@@ -15,7 +15,7 @@ namespace EParking.Models
         [Display(Name = "Status")]
         public StatusClanarine StatusClanarine { get; set; }
         [Required]
-        [Display(Name = "Tip članarine(MJESECNA/GODISNJA)")]
+        [Display(Name = "Tip članarine (MJESECNA/ GODISNJA)")]
         public TipClanarine TipClanarine { get; set; }
     }
 }
