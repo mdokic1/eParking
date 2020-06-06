@@ -128,6 +128,8 @@ namespace EParking.Controllers
             novaTransakcija.VrijemeDolaska = DateTime.Now;
             novaTransakcija.ParkingLokacijaId = odredisnaParkingLokacija.ID;
             novaTransakcija.ParkingLokacija = odredisnaParkingLokacija;
+            novaTransakcija.VoziloId = -1;
+            novaTransakcija.Vozilo = new Vozilo();
             EParkingFacade.Instance.HistorijaTransakcija.Add(novaTransakcija);
             return View(odredisnaParkingLokacija);
         }
@@ -135,6 +137,10 @@ namespace EParking.Controllers
         [HttpPost]
         public async Task<IActionResult> TimerAsync(double iznos, ParkingLokacija parkingLokacija)
         {
+            //uzimanje vozila PROBA SAMO
+            Vozilo vozilo = _context.Vozilo.ToList().ElementAt(0);
+            //
+
             //dodaj transakciju
             foreach (var t in EParkingFacade.Instance.HistorijaTransakcija)
             {
@@ -142,6 +148,8 @@ namespace EParking.Controllers
                 {
                     t.VrijemeOdlaska = DateTime.Now;
                     t.Iznos = iznos;
+                    t.VoziloId = vozilo.ID; //proba
+                    t.Vozilo = vozilo; //proba
                     _context.Transakcija.Add(t);
                     await _context.SaveChangesAsync();
                 }
@@ -158,7 +166,7 @@ namespace EParking.Controllers
             }
             parkingLokacija.BrojSlobodnihMjesta += 1;
             _context.Update(parkingLokacija);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             //-----------------------------------
 
             TempData["iznos"] = Newtonsoft.Json.JsonConvert.SerializeObject(iznos);
