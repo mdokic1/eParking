@@ -114,8 +114,40 @@ namespace EParkingOOAD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Clan clan)
         {
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            List<Clan> clanovi = _context.Clan.ToList();
+            List<Administrator> administratori = _context.Administrator.ToList();
             if (ModelState.IsValid)
             {
+                foreach(var v in vlasnici)
+                {
+                    if(clan.Username == v.Username)
+                    {
+                        ViewBag.Ponovljeno = "'true'";
+                        ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv");
+                        return View();
+                    }
+                }
+                foreach (var c in clanovi)
+                {
+                    if (clan.Username == c.Username)
+                    {
+                        ViewBag.Ponovljeno = "'true'";
+                        ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv");
+                        return View();
+                    }
+                }
+
+                foreach (var a in administratori)
+                {
+                    if (clan.Username == a.Username)
+                    {
+                        ViewBag.Ponovljeno = "'true'";
+                        ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv");
+                        return View();
+                    }
+                }
+
                 clan.StatusClanarine = StatusClanarine.INACTIVE;
                 _context.Add(clan);
                 

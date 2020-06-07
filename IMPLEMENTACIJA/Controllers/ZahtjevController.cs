@@ -144,12 +144,12 @@ namespace EParkingOOAD.Controllers
             //await _context.SaveChangesAsync();
 
             mail.Subject = "Obrada zahtjeva";
-            mail.Body = "Poštovani,\n " + 
-                "        želimo da Vas obavijestimo da je Vaš zahtjev za članarinu odobren. \n" +
+            mail.Body = "Poštovani, " + Environment.NewLine + 
+                "        želimo da Vas obavijestimo da je Vaš zahtjev za članarinu odobren. " + Environment.NewLine + 
                 "        Uplatu članarine trebate izvršiti na račun 11111111111111111 u roku od 5 radnih dana, " +
-                "        nakon čega će status Vaše članarine postati  aktivan.\n" +
-                "        " + "\n" +
-                "        Srdačan pozdrav, \n"
+                "        nakon čega će status Vaše članarine postati  aktivan." + Environment.NewLine + 
+                "        " + Environment.NewLine +
+                "        Srdačan pozdrav, " + Environment.NewLine
                       + vlasnik.ImePrezime;
             //mail.Body = mail.Body.Replace("@", System.Environment.NewLine);
             mail.IsBodyHtml = true;
@@ -307,6 +307,7 @@ namespace EParkingOOAD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("VoziloId,VlasnikId")] Zahtjev zahtjev)
         {
+            
             if (ModelState.IsValid)
             {
                 Vozilo voziloData = Newtonsoft.Json.JsonConvert.DeserializeObject<Vozilo>((string)TempData["vozilo"]);
@@ -317,12 +318,13 @@ namespace EParkingOOAD.Controllers
                 _context.Add(zahtjev);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
+                
             }
             //ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime", zahtjev.VlasnikId);
             //ViewData["VoziloId"] = new SelectList(_context.Vozilo, "ID", "BrojMotora", zahtjev.VoziloId);
             //OVO KORISTIM KAKO BIH PRIKAZAO ALERT
             ViewBag.Alert = "'show'";
-            return View(zahtjev);
+            return RedirectToAction("Create", "Clan");
         }
 
         // GET: Zahtjev/Edit/5
