@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Kapacitet" class="control-label"></label>
-                                    <input asp-for="Kapacitet" class="form-control" />
+                                    <input type="number" min="1" asp-for="Kapacitet" class="form-control" />
                                     <span asp-validation-for="Kapacitet" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">

@@ -8,79 +8,86 @@
 <div class="landing-section">
 
 
-<hr />
+    <hr />
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Registracija</div>
-                <div class="card-body">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Registracija</div>
+                    <div class="card-body">
 
-                    <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="RezervisanoParkingMjesto" class="control-label"></label>
-                            <select asp-for="RezervisanoParkingMjesto" class="form-control" asp-items="ViewBag.RezervisanoParkingMjesto"></select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="StatusClanarine" class="control-label"></label>
-                            <option>
-                                INACTIVE
-                            </option>
-                            <span asp-validation-for="StatusClanarine" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TipClanarine" class="control-label"></label>
-                            <input asp-for="TipClanarine" class="form-control" />
-                            <span asp-validation-for="TipClanarine" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ImePrezime" class="control-label"></label>
-                            <input asp-for="ImePrezime" class="form-control" />
-                            <span asp-validation-for="ImePrezime" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Username" class="control-label"></label>
-                            <input asp-for="Username" class="form-control" />
-                            <span asp-validation-for="Username" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="JMBG" class="control-label"></label>
-                            <input asp-for="JMBG" class="form-control" />
-                            <span asp-validation-for="JMBG" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Adresa" class="control-label"></label>
-                            <input asp-for="Adresa" class="form-control" />
-                            <span asp-validation-for="Adresa" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="BrojMobitela" class="control-label"></label>
-                            <input asp-for="BrojMobitela" class="form-control" />
-                            <span asp-validation-for="BrojMobitela" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="row justify-content-center">
-                            <input type="submit" value="Potvrdi" class="btn btn-secondary" />
-                        </div>
-                    </form>
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="RezervisanoParkingMjesto" class="control-label"></label>
+                                <select asp-for="RezervisanoParkingMjesto" class="form-control" asp-items="ViewBag.RezervisanoParkingMjesto"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="StatusClanarine" class="control-label"></label>
+                                <option>
+                                    INACTIVE
+                                </option>
+                                <span asp-validation-for="StatusClanarine" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TipClanarine" class="control-label"></label>
+                                <input asp-for="TipClanarine" class="form-control" />
+                                <span asp-validation-for="TipClanarine" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImePrezime" class="control-label"></label>
+                                <input type="text" asp-for="ImePrezime" class="form-control" />
+                                <span asp-validation-for="ImePrezime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Username" class="control-label"></label>
+                                <input asp-for="Username" class="form-control" />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="JMBG" class="control-label"></label>
+                                <input type="number" min="1" pattern="[0-9]{13}" minlength="13" required maxlength="13" asp-for="JMBG" class="form-control" />
+                                <span asp-validation-for="JMBG" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Adresa" class="control-label"></label>
+                                <input asp-for="Adresa" class="form-control" />
+                                <span asp-validation-for="Adresa" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BrojMobitela" class="control-label"></label>
+                                <input type="number" min="1" pattern="[0-9]{9}" minlength="9" required maxlength="9" asp-for="BrojMobitela" class="form-control" />
+                                <span asp-validation-for="BrojMobitela" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input type="email" asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input type="submit" value="Potvrdi" class="btn btn-secondary" />
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-    </div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+            if (@Html.Raw(ViewBag.Ponovljeno) == 'true') {
+                swal("Greška!", "Username već postoji!", "error");
+            }
+</script>
 
 
 @section Scripts {
