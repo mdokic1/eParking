@@ -115,8 +115,8 @@
             }
 
             #izmjena{
-                margin-bottom = 10px;
-                margin-left = 500px;
+                position: relative;
+                margin-left: 100px;
             }
         </style>
 
@@ -237,14 +237,11 @@
                         <div id="chartContainerDay" style="height: 370px; width: 100%;"></div>
                         <br />
                         <br />
-                        <br />
-                        <br />
+
                         <div id="chartContainerMonth" style="height: 370px; width: 100%;"></div>
                         <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-                        <form asp-controller="" asp-action="">
-                            <input id="izmjena" type="submit" value="Sačuvaj" class="btn btn-primary" />
-                        </form>
+
                     </div>
 
                     <div class="tab-pane fade" id="zahtjevi" role="tabpanel" aria-labelledby="zahtjevi-tab">
@@ -263,6 +260,9 @@
             </div>
         </div>
 
+    </form>
+    <form asp-controller="" asp-action="Izmjena">
+        <input id="izmjena" type="submit" value="Promijeni cjenovnik" class="btn btn-primary" />
     </form>
 </div>
 
