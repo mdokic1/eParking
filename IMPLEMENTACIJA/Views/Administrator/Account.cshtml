@@ -1,8 +1,4 @@
-﻿@model EParking.Models.Administrator
-
-@{
-    ViewData["Title"] = "Account Administrator";
-}
+﻿
 
     <head>
         <meta charset="utf-8">
@@ -84,6 +80,8 @@
                 font-weight: 600;
                 color: #6c757d;
                 cursor: pointer;
+                margin-left: 750px;
+                
             }
 
             .proile-rating {
@@ -99,7 +97,10 @@
                 }
 
             .profile-head .nav-tabs {
-                margin-bottom: 5%;
+                margin-bottom: 30px;
+                margin-left: 300px;
+                margin-top: -200px;
+               
             }
 
                 .profile-head .nav-tabs .nav-link {
@@ -114,7 +115,7 @@
 
             .profile-work {
                 padding: 14%;
-                margin-top: -15%;
+               
             }
 
                 .profile-work p {
@@ -155,7 +156,11 @@
 
             .sidebar {
                 position: relative;
-                margin-top: 80px;
+                margin-top: 90px;
+            }
+
+            #naslov{
+                padding-left:111px;
             }
 
 
@@ -192,7 +197,7 @@
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Dobrodošli, !</h1>
+                        <h1 id="naslov" class="h2">Dobrodošli @EParkingFacade.Administrator.Username!</h1>
                     </div>
                     <div id="mjestoZaView" class="container emp-profile">
                         <div class="col-md-4">
@@ -200,12 +205,64 @@
 
                                 <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
                                 <h5>
-                                    @Model.Username
+                                    @EParkingFacade.Administrator.Username
                                 </h5>
-
+                                
 
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="profile-head">
+                                <h3>
+                                    
+                                </h3>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+
+
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Administrator</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Uredi profil" />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-work">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="tab-content profile-tab" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <h5>
+                                            Username: @EParkingFacade.Administrator.Username
+                                        </h5>
+                                        <h5>
+                                            Password: @EParkingFacade.Administrator.Password
+                                        </h5>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </main>
 

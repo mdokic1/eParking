@@ -32,17 +32,21 @@ namespace EParkingOOAD.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Account(string username, string password)
+        public IActionResult Account(string username, string password)
         {
-            Administrator administrator = await _context.Administrator.FindAsync(1);
+            /*Administrator administrator = await _context.Administrator.FindAsync(1);
             if(administrator.Username == username && administrator.Password == password)
             {
                 return View(administrator);
-            }
+            }*/
             return View();
         }
 
-
+        public IActionResult Logout()
+        {
+            EParkingFacade.Administrator = null;
+            return RedirectToAction("Login", "Eparking");
+        }
 
         // GET: Administrator/Details/5
         public async Task<IActionResult> Details(int? id)
