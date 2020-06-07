@@ -169,7 +169,7 @@ namespace EParkingOOAD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Account", "Administrator", EParkingFacade.Administrator);
             }
             return View(administrator);
         }

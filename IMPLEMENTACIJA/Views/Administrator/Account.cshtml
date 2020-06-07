@@ -26,8 +26,7 @@
 
         <style>
 
-            <style >
-
+            
             .emp-profile {
                 padding: 3%;
                 margin-top: 3%;
@@ -40,6 +39,7 @@
                 text-align: center;
                 font-size: 20px;
             }
+
 
                 .profile-img img {
                     width: 60%;
@@ -72,7 +72,7 @@
                 color: #0062cc;
             }
 
-            .profile-edit-btn {
+            /*.profile-edit-btn {
                 border: none;
                 border-radius: 1.5rem;
                 width: 70%;
@@ -82,6 +82,26 @@
                 cursor: pointer;
                 margin-left: 750px;
                 
+            }*/
+            #mjestoZaView{
+                position: relative;
+            }
+
+            .edit-button {
+                border-radius: 30px;
+                font-weight: 600;
+                padding: 2px;
+                right: 30px;
+                top: 30px;
+                border: none;
+                height: 30px;
+                width: 180px;
+                background-color: lightgray;
+                cursor: pointer;
+            }
+
+            .nasa-forma {
+                text-align: right;
             }
 
             .proile-rating {
@@ -99,7 +119,7 @@
             .profile-head .nav-tabs {
                 margin-bottom: 30px;
                 margin-left: 300px;
-                margin-top: -200px;
+                margin-top: -205px;
                
             }
 
@@ -164,7 +184,6 @@
             }
 
 
-
             #btnAdmin {
                 border-radius: 10px;
                 height: 60px;
@@ -183,101 +202,106 @@
 
     <body>
         <div class="container-fluid">
+            
             <div class="row">
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <input id="btnAdmin" type="button" value="Vlasnik" onclick="location.href='@Url.Action("Index", "Vlasnik")'" class="btn btn-secondary btn-lg" />
-                        <input id="btnAdmin" type="button" value="Clan" onclick="location.href='@Url.Action("Index", "Član")'" class="btn btn-secondary btn-lg" />
-                        <input id="btnAdmin" type="button" value="Parking lokacija" onclick="location.href='@Url.Action("Index", "ParkingLokacija")'" class="btn btn-secondary btn-lg" />
-                        
-                    </div>
+                <div class="col-sm-1">
+                    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <input id="btnAdmin" type="button" value="Vlasnik" onclick="location.href='@Url.Action("Index", "Vlasnik")'" class="btn btn-secondary btn-lg" />
+                            <input id="btnAdmin" type="button" value="Clan" onclick="location.href='@Url.Action("Index", "Član")'" class="btn btn-secondary btn-lg" />
+                            <input id="btnAdmin" type="button" value="Parking lokacija" onclick="location.href='@Url.Action("Index", "ParkingLokacija")'" class="btn btn-secondary btn-lg" />
 
-                </nav>
+                        </div>
 
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                    </nav>
+                </div>
+                <div class="col-md-11">
+                    
 
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 id="naslov" class="h2">Dobrodošli @EParkingFacade.Administrator.Username!</h1>
-                    </div>
-                    <div id="mjestoZaView" class="container emp-profile">
-                        <form method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Administrator.ID">
-                            <div class="col-md-4">
-                                <div class="profile-img">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 id="naslov" class="h2">Dobrodošli @EParkingFacade.Administrator.Username!</h1>
+                        </div>
+                        <div id="mjestoZaView" class="container emp-profile">
+                            <form class="nasa-forma" method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Administrator.ID">
+                                <input type="submit" class="edit-button" name="btnAddMore" value="Uredi profil" />
+                            </form>
+                                <div class="col-md-4 text-md-left">
+                                    <div class="profile-img">
 
-                                    <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
-                                    <h5>
-                                        @EParkingFacade.Administrator.Username
-                                    </h5>
+                                        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
+                                        <h5>
+                                            @EParkingFacade.Administrator.Username
+                                        </h5>
 
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="profile-head">
-                                    <h3>
-                                    </h3>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-
-
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Administrator</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Uredi profil" />
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="profile-work">
                                         
+                                            
+                                        
+
+
                                     </div>
                                 </div>
 
-                                <div class="col-md-8">
-                                    <div class="tab-content profile-tab" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            <h5>
-                                                Username: @EParkingFacade.Administrator.Username
-                                            </h5>
-                                            <h5>
-                                                Password: @EParkingFacade.Administrator.Password
-                                            </h5>
-                                        </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                            <h5>
-                                                Ukupno parkinga: @ViewBag.Parkinzi
-                                            </h5>
-                                            <h5>
-                                                Ukupno vlasnika: @ViewBag.Vlasnici
-                                            </h5>
-                                            <h5>
-                                                Ukupno članova: @ViewBag.Clanovi
-                                            </h5>
-                                        </div>
+                                <div class="col-md-6 justify-content-center">
+                                    <div class="profile-head">
+                                        <h3>
+                                        </h3>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
 
+
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Administrator</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled</a>
+                                            </li>
+
+                                        </ul>
                                     </div>
                                 </div>
-                            </div>
 
+                                
 
-                        </form>
-                    </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-work">
 
-                </main>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-8">
+                                        <div class="tab-content profile-tab" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                <h5>
+                                                    Username: @EParkingFacade.Administrator.Username
+                                                </h5>
+                                                <h5>
+                                                    Password: @EParkingFacade.Administrator.Password
+                                                </h5>
+                                            </div>
+                                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                <h5>
+                                                    Ukupno parkinga: @ViewBag.Parkinzi
+                                                </h5>
+                                                <h5>
+                                                    Ukupno vlasnika: @ViewBag.Vlasnici
+                                                </h5>
+                                                <h5>
+                                                    Ukupno članova: @ViewBag.Clanovi
+                                                </h5>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                </div>
+        
 
                 <script>
                     $('#vlasni-btn').click(function () {
@@ -292,6 +316,6 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
                 <script src="dashboard.js"></script>
             </div>
-         </div>
+        </div>
     </body>
 </div>

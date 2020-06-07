@@ -8,15 +8,16 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 
     <style>
-        .body{
+        .body {
             justify-content: center;
             align-items: center;
-            padding-bottom: 100px;
         }
+
         .img-wrap {
             margin-left: auto;
             margin-right: auto;
         }
+
             .img-wrap img {
                 width: 260px;
                 height: 260px;
@@ -24,83 +25,107 @@
                 border-radius: 50%;
                 box-shadow: 0 0 10px #999999;
             }
-        #aboutus h2{
+
+        #aboutus h2 {
             margin-bottom: 25px;
         }
     </style>
 </head>
 
-<body>
-    <section id="aboutus">
-        <div class="container">
-            <br />
-            <h1>Neke informacije o aplikaciji</h1>
-            <br />
-            <br />
-            <p>
-                Tim zaslužan za modeliranje i razvoj web aplikacije eParking broji svega 3 člana: <strong>Faris Demir</strong>, <strong>Milica Đokić</strong> i <strong>Amar Bešlagić</strong>.
-                Aplikacija predstavlja rezultat višemjesečnog rada na analizi, modeliranju i implementaciji problema elektronizacije procesa parkiranja.
-                Prvo pitanje koje smo sebi postavili prilikom odabira ove problematike je <strong>zašto baš eParking?</strong> Svjedoci smo da se svi često susrećemo sa problemom
-                pronalaska parking mjesta pa u našoj aplikaciji obavezno nudimo korisnicima mogućnost prikaza rute do najbližeg slobodnog parkinga u našoj parking mreži.
-                Također, tu je i mogućnost individualnog zakupa parking mjesta na jednoj od lokacija koja nudi korisnicima neke nove mogućnosti kao što su popusti
-                prilikom posjete bilo kojoj drugoj parking lokaciji. Još je bitno istaći da vlasnici imaju ažuran uvid u kompletnu analitiku parkinga što uključuje
-                prometnost, zaradu, listu svih zahtjeva za članarinu i slično.
-            </p>
-            <br />
-            <br />
-            <h1>Neke informacije o nama</h1>
-            <br />
-            <br />
-            <div class="row">
-                <div class="col-sm-7">
-                    <h2 class="text-center">Faris Demir, developer i dizajner</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </p>
+
+<div class="landing-section">
+    <body>
+        <section id="aboutus">
+            <div class="container">
+                <br />
+                <h1>Neke informacije o aplikaciji</h1>
+                <br />
+                <br />
+                <p>
+                    Tim zaslužan za modeliranje i razvoj web aplikacije eParking broji svega 3 člana: <strong>Faris Demir</strong>, <strong>Milica Đokić</strong> i <strong>Amar Bešlagić</strong>.
+                    Aplikacija predstavlja rezultat višemjesečnog rada na analizi, modeliranju i implementaciji problema elektronizacije procesa parkiranja.
+                    Prvo pitanje koje smo sebi postavili prilikom odabira ove problematike je <strong>zašto baš eParking?</strong> Svjedoci smo da se svi često susrećemo sa problemom
+                    pronalaska parking mjesta pa u našoj aplikaciji obavezno nudimo korisnicima mogućnost prikaza rute do najbližeg slobodnog parkinga u našoj parking mreži.
+                    Također, tu je i mogućnost individualnog zakupa parking mjesta na jednoj od lokacija koja nudi korisnicima neke nove mogućnosti kao što su popusti
+                    prilikom posjete bilo kojoj drugoj parking lokaciji. Još je bitno istaći da vlasnici imaju ažuran uvid u kompletnu analitiku parkinga što uključuje
+                    prometnost, zaradu, listu svih zahtjeva za članarinu i slično.
+                </p>
+                <br />
+                <br />
+                <h1>Neke informacije o nama</h1>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h2 class="text-center">Faris Demir, developer i dizajner</h2>
+                        <p>
+                            Student druge godine Elektrotehničkog fakulteta odsjeka za Računarstvo i informatiku. Dosad je radio na projektima koji su
+                            za implementaciju koristili sljedeće programske jezike: C, C++, C#, Java, JavaScript. Posjeduje iskustvo u radu na razvoju
+                            mobilnih aplikacija za android, web aplikacija koristeći ASP.NET Core, kao i konzolnih aplikacija.
+                        </p>
+                        <p>
+                            Kontakt email: <strong>fdemir1@etf.unsa.ba</strong>
+                        </p>
+                        <p>
+                            GitHub profil: <a href="https://github.com/faris-demir">Klikni ovdje!</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-5 text-sm-center">
+                        <div class="img-wrap justify-content-center">
+                            <img src="~/farisProfilna.jpg" />
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-5 text-sm-center">
-                    <div class="img-wrap justify-content-center">
-                        <img src="~/farisProfilna.jpg" />
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-sm-5 text-sm-center">
+                        <div class="img-wrap">
+                            <img src="~/milicaProfilna.jpg" />
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <h2 class="text-center">Milica Đokić, developer i dizajner</h2>
+                        <p>
+                            Studentica druge godine Elektrotehničkog fakulteta odsjeka za Računarstvo i informatiku. Dosad je radio na projektima koji su
+                            za implementaciju koristili sljedeće programske jezike: C, C++, C#, Java, JavaScript. Posjeduje iskustvo u radu na razvoju
+                            mobilnih aplikacija za android, web aplikacija koristeći ASP.NET Core, kao i konzolnih aplikacija.
+                        </p>
+                        <p>
+                            Kontakt email: <strong>mdokic1@etf.unsa.ba</strong>
+                        </p>
+                        <p>
+                            GitHub profil: <a href="https://github.com/mdokic1">Klikni ovdje!</a>
+                        </p>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h2 class="text-center">Amar Bešlagić, developer i dizajner</h2>
+                        <p>
+                            Student druge godine Elektrotehničkog fakulteta odsjeka za Računarstvo i informatiku. Dosad je radio na projektima koji su
+                            za implementaciju koristili sljedeće programske jezike: C, C++, C#, Java, JavaScript. Posjeduje iskustvo u radu na razvoju
+                            web aplikacija koristeći ASP.NET Core, kao i konzolnih aplikacija.
+                        </p>
+                        <p>
+                            Kontakt email: <strong>abeslagic1@etf.unsa.ba</strong>
+                        </p>
+                        <p>
+                            GitHub profil: <a href="https://github.com/abeslagic1">Klikni ovdje!</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-5 text-sm-center">
+                        <div class="img-wrap">
+                            <img src="~/amarProfilna.jpg" />
+                        </div>
                     </div>
                 </div>
             </div>
-            <br />
-            <br />
-            <div class="row">
-                <div class="col-sm-5 text-sm-center">
-                    <div class="img-wrap">
-                        <img src="~/milicaProfilna.jpg" />
-                    </div>
-                </div>
-                <div class="col-sm-7">
-                    <h2 class="text-center">Milica Đokić, developer i dizajner</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </p>
-                </div>
-            </div>
-            <br />
-            <br />
-            <div class="row">
-                <div class="col-sm-7">
-                    <h2 class="text-center">Amar Bešlagić, developer i dizajner</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </p>
-                </div>
-                <div class="col-sm-5 text-sm-center">
-                    <div class="img-wrap">
-                        <img src="~/farisProfilna.jpg" />
-                    </div>
-                </div>
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-        </div>
-    </section>
-</body>
+        </section>
+    </body>
+</div>
 
 
 
