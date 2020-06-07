@@ -34,11 +34,11 @@ namespace EParkingOOAD.Controllers
 
         public async Task<IActionResult> Account(string username, string password)
         {
-            Administrator administrator = await _context.Administrator.FindAsync(1);
-            if(administrator.Username == username && administrator.Password == password)
-            {
-                return View(administrator);
-            }
+            //Administrator administrator = await _context.Administrator.FindAsync(1);
+            //if(administrator.Username == username && administrator.Password == password)
+            //{
+            //    return View();
+            //}
             return View();
         }
 
