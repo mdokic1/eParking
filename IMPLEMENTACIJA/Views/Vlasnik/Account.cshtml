@@ -46,15 +46,7 @@
                 color: #0062cc;
             }
 
-            .profile-edit-btn {
-                border: none;
-                border-radius: 1.5rem;
-                width: 70%;
-                padding: 2%;
-                font-weight: 600;
-                color: #6c757d;
-                cursor: pointer;
-            }
+            
 
             .proile-rating {
                 font-size: 12px;
@@ -114,9 +106,26 @@
                 color: #0062cc;
             }
 
-            #izmjena{
-                position: relative;
-                margin-left: 100px;
+            #edit-btn {
+                border: none;
+                border-radius: 1.5rem;
+                width: 70%;
+                padding: 2%;
+                font-weight: 600;
+                color: #6c757d;
+            }
+
+            #izmjena {
+                border-radius: 30px;
+                font-weight: 600;
+                padding: 2px;
+                position: absolute;
+                right: 260px;
+                top: 190px;
+                border: none;
+                height: 30px;
+                width: 180px;
+                color: #6c757d;
             }
         </style>
 
@@ -172,6 +181,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container emp-profile">
+
     <form method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Vlasnik.ID">
         <div class="row">
             <div class="col-md-4">
@@ -211,7 +221,7 @@
             </div>
 
             <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Uredi profil" />
+                <input type="submit" class="btn" id ="edit-btn" name="btnAddMore" value="Uredi profil" />
             </div>
 
 
@@ -261,8 +271,11 @@
         </div>
 
     </form>
-    <form asp-controller="" asp-action="Izmjena">
-        <input id="izmjena" type="submit" value="Promijeni cjenovnik" class="btn btn-primary" />
+    <form method="get" asp-controller="Vlasnik" asp-action="Izmjena" asp-route-id="@EParkingFacade.Vlasnik.ID">
+
+        <input id="izmjena" type="submit" value="Promijeni cjenovnik" class="btn " />
+
+
     </form>
 </div>
 

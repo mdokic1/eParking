@@ -98,6 +98,39 @@ namespace EParkingOOAD.Controllers
             return View();
         }
 
+        
+        public async Task<IActionResult> Izmjena(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vlasnik = await _context.Vlasnik
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (vlasnik == null)
+            {
+                return NotFound();
+            }
+
+            List<ParkingLokacija> parkinzi = _context.ParkingLokacija.ToList();
+            List<Cjenovnik> cjenovnici = _context.Cjenovnik.ToList();
+            foreach(var p in parkinzi)
+            {
+                if(p.VlasnikId == vlasnik.ID)
+                {
+                    foreach(var c in cjenovnici)
+                    {
+                        if(p.CjenovnikId == c.ID)
+                        {
+                            return RedirectToAction("Edit", "Cjenovnik", new { id = c.ID });
+                        }
+                    }
+                }
+            }
+            return View(vlasnik);
+        }
+
         public IActionResult Logout()
         {
             EParkingFacade.Vlasnik = null;
