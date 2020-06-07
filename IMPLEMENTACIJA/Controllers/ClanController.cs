@@ -199,6 +199,7 @@ namespace EParkingOOAD.Controllers
                 {
                     _context.Update(clan);
                     await _context.SaveChangesAsync();
+                    EParkingFacade.Clan = clan;
                 }
                 catch (DbUpdateConcurrencyException)
                 {

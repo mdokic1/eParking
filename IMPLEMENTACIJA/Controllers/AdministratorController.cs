@@ -157,6 +157,7 @@ namespace EParkingOOAD.Controllers
                 {
                     _context.Update(administrator);
                     await _context.SaveChangesAsync();
+                    EParkingFacade.Administrator = administrator;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
