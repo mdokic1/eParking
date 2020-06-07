@@ -59,7 +59,8 @@ namespace EParking.Controllers
             {
                 _context.Add(cjenovnik);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["cjenovnik"] = Newtonsoft.Json.JsonConvert.SerializeObject(cjenovnik);
+                return RedirectToAction("Create", "ParkingLokacija");
             }
             return View(cjenovnik);
         }
@@ -112,7 +113,16 @@ namespace EParking.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                List<ParkingLokacija> parkinzi = _context.ParkingLokacija.ToList();
+                foreach(var p in parkinzi)
+                {
+                    if(p.CjenovnikId == cjenovnik.ID)
+                    {
+                        return RedirectToAction("Edit", "ParkingLokacija", new { id = p.ID });
+                    }
+                }
+                
             }
             return View(cjenovnik);
         }

@@ -113,6 +113,11 @@
                 font-weight: 600;
                 color: #0062cc;
             }
+
+            #izmjena{
+                margin-bottom = 10px;
+                margin-left = 500px;
+            }
         </style>
 
         <script>
@@ -236,7 +241,12 @@
                         <br />
                         <div id="chartContainerMonth" style="height: 370px; width: 100%;"></div>
                         <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+                        <form asp-controller="" asp-action="">
+                            <input id="izmjena" type="submit" value="Sačuvaj" class="btn btn-primary" />
+                        </form>
                     </div>
+
                     <div class="tab-pane fade" id="zahtjevi" role="tabpanel" aria-labelledby="zahtjevi-tab">
                         <table>
                             @foreach (var item in ViewBag.zahtjevi)
