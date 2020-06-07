@@ -45,18 +45,18 @@
 
                             <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
-                                        <i class="fa fa-credit-card"></i> Credit Card
+                                    <a class="nav-link active text-white bg-secondary" data-toggle="pill" href="#nav-tab-card">
+                                        <i class="fa fa-credit-card"></i> Kreditna kartica
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+                                    <a class="nav-link text-white bg-secondary" data-toggle="pill" href="#nav-tab-paypal">
                                         <i class="fab fa-paypal"></i>  Paypal
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
-                                        <i class="fas fa-money-bill-wave"></i>  Cash
+                                    <a class="nav-link text-white bg-secondary" data-toggle="pill" href="#nav-tab-bank">
+                                        <i class="fas fa-money-bill-wave"></i>  Gotovina
                                     </a>
                                 </li>
                             </ul>
@@ -66,12 +66,12 @@
                                     @*<p class="alert alert-success">Some text success or error</p>*@
                                     <form role="form" asp-action="Pay" method="post">
                                         <div class="form-group">
-                                            <label for="username">Full name (on the card)</label>
+                                            <label for="username">Ime i prezime (sa kartice)</label>
                                             <input type="text" class="form-control" name="username" placeholder="" required>
                                         </div> <!-- form-group.// -->
 
                                         <div class="form-group">
-                                            <label for="cardNumber">Card number</label>
+                                            <label for="cardNumber">Broj kartice</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="cardNumber" placeholder="" required>
                                                 <div class="input-group-append">
@@ -86,27 +86,27 @@
                                         <div class="row justify-content-center">
                                             <div class="col-sm-8">
                                                 <div class="form-group">
-                                                    <label><span class="hidden-xs">Expiration</span> </label>
+                                                    <label><span class="hidden-xs">Datum isteka važenja</span> </label>
                                                     <div class="input-group">
                                                         <input type="number" class="form-control" placeholder="MM" name="month" required>
-                                                        <input type="number" class="form-control" placeholder="YY" name="year" required>
+                                                        <input type="number" class="form-control" placeholder="GG" name="year" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                                    <label data-toggle="tooltip" title="3-cifreni kod sa poleđine vaše kartice">CVV <i class="fa fa-question-circle"></i></label>
                                                     <input type="number" class="form-control" name="cvv" required>
                                                 </div> <!-- form-group.// -->
                                             </div>
-                                            <input class="subscribe btn btn-primary" type="submit" value="Confirm">
+                                            <input name="submitType" class="subscribe btn btn-secondary" type="submit" value="Procesiraj podatke">
                                         </div> <!-- row.// -->
 
                                     </form>
                                 </div> <!-- tab-pane.// -->
                                 <div class="tab-pane fade" id="nav-tab-paypal">
-                                    <p>Paypal is the easiest way to pay online!</p>
-                                    <button id="btnPayPal" type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Continue to Paypal </button>
+                                    <p>PayPal je najlakši način plaćanja online!</p>
+                                    <button id="btnPayPal" type="button" class="btn btn-secondary"> <i class="fab fa-paypal"></i> Preusmjeri na PayPal </button>
                                     <p>
                                         <strong>Uputa:</strong> Klikom na prikazano dugme bit ćete prebačeni na PayPal stranicu gdje možete dalje
                                         nastaviti sa procesom naplate parkinga.
@@ -121,7 +121,7 @@
                                                 <strong>stranicu na kojoj se trenutno nalazite</strong> koja sadrži <strong>konačni iznos</strong> za naplatu <strong>prikazan na vrhu</strong> stranice.
                                                 Nakon što obavite naplatu možete pritisnuti dugme <strong>Confirm</strong>.
                                             </p>
-                                            <input id="btnCashConfirm" class="subscribe btn btn-primary" type="submit" value="Confirm" />
+                                            <input name="submitType" id="btnCashConfirm" class="subscribe btn btn-secondary" type="submit" value="Potvrdi" />
                                         </div>
                                     </form>
 
