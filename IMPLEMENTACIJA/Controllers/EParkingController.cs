@@ -203,38 +203,48 @@ namespace EParking.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PayAsync(string username, double cardNumber, int month, int year, int cvv)
+        public async Task<IActionResult> PayAsync(string username, double cardNumber, int month, int year, int cvv, string submitType)
         {
-            ViewBag.Alert = "'show'";
-            //dodajemo Vlasniku parkinga prihode
-            double prihodi = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["prihodi"]);
-            int parkingLokacijaID = Newtonsoft.Json.JsonConvert.DeserializeObject<int>((string)TempData["parkingLokacijaID"]);
-            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
-            ParkingLokacija vlasnikovParking = new ParkingLokacija();
-            foreach (var p in EParkingFacade.Instance.Parkinzi)
+            if (submitType == "Potvrdi" || username != null && cardNumber != 0 && month != 0 && year != 0 && cvv != 0 && submitType == "Procesiraj podatke")
             {
-                if (p.ID == parkingLokacijaID)
+                //dodajemo Vlasniku parkinga prihode
+                double prihodi = 0;
+                try
                 {
-                    vlasnikovParking = p;
-                    break;
-                }
-            }
-            foreach (var v in vlasnici)
-            {
-                if (vlasnikovParking.VlasnikId == v.ID)
+                    prihodi = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["prihodi"]);
+                } catch (Exception e)
                 {
-                    v.Prihodi += prihodi;
-                    _context.Update(v);
-                    await _context.SaveChangesAsync();
-                    break;
+                    return View();
                 }
+                ViewBag.Alert = "'show'";
+                int parkingLokacijaID = Newtonsoft.Json.JsonConvert.DeserializeObject<int>((string)TempData["parkingLokacijaID"]);
+                List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+                ParkingLokacija vlasnikovParking = new ParkingLokacija();
+                foreach (var p in EParkingFacade.Instance.Parkinzi)
+                {
+                    if (p.ID == parkingLokacijaID)
+                    {
+                        vlasnikovParking = p;
+                        break;
+                    }
+                }
+                foreach (var v in vlasnici)
+                {
+                    if (vlasnikovParking.VlasnikId == v.ID)
+                    {
+                        v.Prihodi += prihodi;
+                        _context.Update(v);
+                        await _context.SaveChangesAsync();
+                        break;
+                    }
+                }
+                //----------------------------------
             }
-            //----------------------------------
             return View();
         }
 
         public IActionResult Pay()
-        {            
+        {
             ViewBag.Iznos = Newtonsoft.Json.JsonConvert.DeserializeObject<double>((string)TempData["iznos"]); 
             TempData["prihodi"] = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Iznos);
             return View();

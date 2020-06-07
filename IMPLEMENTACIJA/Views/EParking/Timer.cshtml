@@ -3,48 +3,52 @@
     ViewData["Title"] = "Timer";
 }
 
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <style>
-        #display {
-            width: 100%;
-            font-size: 72px;
-            text-align: center;
-            margin: 0px auto;
-        }
+        <style>
+            #display {
+                width: 100%;
+                font-size: 72px;
+                text-align: center;
+                margin: 0px auto;
+            }
 
-        .buttons {
-            text-align: center;
-            margin-top: 50px;
-        }
+            .buttons {
+                text-align: center;
+                margin-top: 50px;
+            }
 
-        .col-md-4 {
-            font-size: 22px;
-        }
+            #startStop {
+                font-family: FontAwesome;
+            }
 
-        .border-info {
-            font-size: 52px;
-        }
+            .col-md-4 {
+                font-size: 22px;
+            }
 
-        .container {
-            width: 100%;
-        }
+            .border-info {
+                font-size: 52px;
+            }
 
-        .naslov {
-            margin-top: 20px;
-        }
+            .container {
+                width: 100%;
+            }
 
-        .tekst1 {
-            margin-top: 30px;
-        }
+            .naslov {
+                margin-top: 20px;
+            }
 
-        .tekst2 {
-            margin-top: 30px;
-        }
-    </style>
+            .tekst1 {
+                margin-top: 30px;
+            }
 
-</head>
+            .tekst2 {
+                margin-top: 30px;
+            }
+        </style>
+        <script src="https://kit.fontawesome.com/3874a11e93.js" crossorigin="anonymous"></script>
+    </head>
 
 <div class="landing-section">
     <body>
@@ -73,7 +77,7 @@
                     <div class="buttons">
                         <form asp-action="Timer" method="post">
                             <input id="iznos" name="iznos" type="hidden" value="" />
-                            <input id="startStop" type="submit" class="btn btn-primary btn-lg" value="Registruj izlazak" onclick="startStop()" />
+                            <input id="startStop" type="submit" class="btn btn-secondary btn-lg" value="Registruj izlazak &#xf08b &#xf1b9" onclick="startStop()" />
                         </form>
                     </div>
                 </div>
