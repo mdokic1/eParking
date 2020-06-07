@@ -4,36 +4,35 @@
     ViewData["Title"] = "Slanje Emaila";
 }
 
-    <div class="landing-section">
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">Email</div>
-                        <div class="card-body">
 
-                            <p>From: </p>
-                            <p>@ViewBag.From</p>
-                            <p>To: </p>
-                            <p>@ViewBag.To</p>
-                            <p>Subject: </p>
-                            <p>@ViewBag.Subject</p>
-                            <p>Body: </p>
-                            <p>@ViewBag.Body</p>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Email</div>
+                    <div class="card-body">
 
-                        <form method="get" asp-action="EMail" asp-route-id="@Model.ID">
-                            <div class="row justify-content-center">
-                                <input type="submit" value="Pošalji" class="btn btn-primary" />
-                            </div>
-
-                        </form>
+                        <p>From: </p>
+                        <p>@ViewBag.From</p>
+                        <p>To: </p>
+                        <p>@ViewBag.To</p>
+                        <p>Subject: </p>
+                        <p>@ViewBag.Subject</p>
+                        <p>Body: </p>
+                        <p>@ViewBag.Body</p>
                     </div>
 
+                    <form method="get" asp-action="EMail" asp-route-id="@Model.ID">
+                        <div class="row justify-content-center">
+                            <input type="submit" value="Pošalji" class="btn btn-secondary" />
+                        </div>
+                        
+                    </form>
                 </div>
+
             </div>
-
-
         </div>
-</div>
+
+
+    </div>

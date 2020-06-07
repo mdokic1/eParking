@@ -46,15 +46,7 @@
                 color: #0062cc;
             }
 
-            .profile-edit-btn {
-                border: none;
-                border-radius: 1.5rem;
-                width: 70%;
-                padding: 2%;
-                font-weight: 600;
-                color: #6c757d;
-                cursor: pointer;
-            }
+            
 
             .proile-rating {
                 font-size: 12px;
@@ -114,9 +106,26 @@
                 color: #0062cc;
             }
 
-            #izmjena{
-                position: relative;
-                margin-left: 100px;
+            #edit-btn {
+                border: none;
+                border-radius: 1.5rem;
+                width: 70%;
+                padding: 2%;
+                font-weight: 600;
+                color: #6c757d;
+            }
+
+            #izmjena {
+                border-radius: 30px;
+                font-weight: 600;
+                padding: 2px;
+                position: absolute;
+                right: 260px;
+                top: 190px;
+                border: none;
+                height: 30px;
+                width: 180px;
+                color: #6c757d;
             }
         </style>
 
@@ -171,100 +180,103 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="landing-section">
-    <div class="container emp-profile">
-        <form method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Vlasnik.ID">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-img">
+<div class="container emp-profile">
 
-                        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
+    <form method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Vlasnik.ID">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+
+                    <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
+                    <h5>
+                        @EParkingFacade.Vlasnik.ImePrezime
+                    </h5>
+
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h3>
+                        Dobrodošli @EParkingFacade.Vlasnik.ImePrezime!
+                    </h3>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Vlasnik</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled prihoda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="zahtjevi-tab" data-toggle="tab" href="#zahtjevi" role="tab" aria-controls="zahtjevi" aria-selected="false">Pregled zahtjeva</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <input type="submit" class="btn" id ="edit-btn" name="btnAddMore" value="Uredi profil" />
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <h5>
-                            @EParkingFacade.Vlasnik.ImePrezime
+                            Username: @EParkingFacade.Vlasnik.Username
                         </h5>
+                        <h5>
+                            Trenutni prihodi: @EParkingFacade.Vlasnik.Prihodi
+                        </h5>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div id="chartContainerDay" style="height: 370px; width: 100%;"></div>
+                        <br />
+                        <br />
+
+                        <div id="chartContainerMonth" style="height: 370px; width: 100%;"></div>
+                        <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="profile-head">
-                        <h3>
-                            Dobrodošli @EParkingFacade.Vlasnik.ImePrezime!
-                        </h3>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
 
+                    <div class="tab-pane fade" id="zahtjevi" role="tabpanel" aria-labelledby="zahtjevi-tab">
+                        <table>
+                            @foreach (var item in ViewBag.zahtjevi)
+                            {
+                                <tr>
+                                    <td>Zahtjev br. @item.ID &nbsp; </td>
+                                    <td><a asp-action="Obrada" asp-controller="Zahtjev" asp-route-id="@item.ID">Obradi</a></td>
+                                </tr>
 
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Vlasnik</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled prihoda</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="zahtjevi-tab" data-toggle="tab" href="#zahtjevi" role="tab" aria-controls="zahtjevi" aria-selected="false">Pregled zahtjeva</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Uredi profil" />
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-work">
-
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <h5>
-                                Username: @EParkingFacade.Vlasnik.Username
-                            </h5>
-                            <h5>
-                                Trenutni prihodi: @EParkingFacade.Vlasnik.Prihodi
-                            </h5>
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <div id="chartContainerDay" style="height: 370px; width: 100%;"></div>
-                            <br />
-                            <br />
-
-                            <div id="chartContainerMonth" style="height: 370px; width: 100%;"></div>
-                            <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-
-                        </div>
-
-                        <div class="tab-pane fade" id="zahtjevi" role="tabpanel" aria-labelledby="zahtjevi-tab">
-                            <table>
-                                @foreach (var item in ViewBag.zahtjevi)
-                                {
-                                    <tr>
-                                        <td>Zahtjev br. @item.ID &nbsp; </td>
-                                        <td><a asp-action="Obrada" asp-controller="Zahtjev" asp-route-id="@item.ID">Obradi</a></td>
-                                    </tr>
-
-                                }
-                            </table>
-                        </div>
+                            }
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </form>
-        <form asp-controller="" asp-action="Izmjena">
-            <input id="izmjena" type="submit" value="Promijeni cjenovnik" class="btn btn-primary" />
-        </form>
-    </div>
+    </form>
+    <form method="get" asp-controller="Vlasnik" asp-action="Izmjena" asp-route-id="@EParkingFacade.Vlasnik.ID">
 
+        <input id="izmjena" type="submit" value="Promijeni cjenovnik" class="btn " />
+
+
+    </form>
 </div>
+
+

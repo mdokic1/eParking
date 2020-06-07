@@ -115,11 +115,19 @@ namespace EParking.Controllers
                 }
 
                 List<ParkingLokacija> parkinzi = _context.ParkingLokacija.ToList();
+                List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
                 foreach(var p in parkinzi)
                 {
                     if(p.CjenovnikId == cjenovnik.ID)
                     {
-                        return RedirectToAction("Edit", "ParkingLokacija", new { id = p.ID });
+                        foreach(var v in vlasnici)
+                        {
+                            if(p.VlasnikId == v.ID)
+                            {
+                                return RedirectToAction("Account", "Vlasnik", new { id = v.ID });
+                            }
+                        }
+                        
                     }
                 }
                 
