@@ -1,10 +1,4 @@
-﻿@model EParking.Models.Clan
-
-@{
-    ViewData["Title"] = "Account Clan";
-}
-
-
+﻿
 
 <div class="landing-section">
     <head>
@@ -132,14 +126,14 @@
     <!------ Include the above in your HEAD tag ---------->
 
     <div class="container emp-profile">
-        <form method="get" form asp-action="Edit" asp-route-id="@Model.ID">
+        <form method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Clan.ID">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
 
                         <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
                         <h5>
-                            @Model.ImePrezime
+                            @EParkingFacade.Clan.ImePrezime
                         </h5>
 
 
@@ -148,7 +142,7 @@
                 <div class="col-md-6">
                     <div class="profile-head">
                         <h3>
-                            Dobrodošli @Model.ImePrezime!
+                            Dobrodošli @EParkingFacade.Clan.ImePrezime!
                         </h3>
                         <br />
                         <br />
@@ -184,16 +178,16 @@
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <h5>
-                                Status članarine: @Model.StatusClanarine
+                                Status članarine: @EParkingFacade.Clan.StatusClanarine
                             </h5>
                             <h5>
-                                Username: @Model.Username
+                                Username: @EParkingFacade.Clan.Username
                             </h5>
                             <h5>
-                                Email: @Model.Email
+                                Email: @EParkingFacade.Clan.Email
                             </h5>
                             <h5>
-                                Adresa: @Model.Adresa
+                                Adresa: @EParkingFacade.Clan.Adresa
                             </h5>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

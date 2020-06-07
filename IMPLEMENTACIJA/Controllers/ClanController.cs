@@ -44,6 +44,11 @@ namespace EParkingOOAD.Controllers
 
         public IActionResult Account(string username, string password)
         {
+            if (username == null && password == null)
+            {
+                username = EParkingFacade.Clan.Username;
+                password = EParkingFacade.Clan.Password;
+            }
             List<Clan> clanovi = _context.Clan.ToList();
             List<Vozilo> vozila = _context.Vozilo.ToList();
             foreach(var k in clanovi)
@@ -87,6 +92,12 @@ namespace EParkingOOAD.Controllers
                 }
             }
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            EParkingFacade.Clan = null;
+            return RedirectToAction("Login", "Eparking");
         }
 
         // GET: Clan/Create

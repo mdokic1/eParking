@@ -103,6 +103,7 @@ namespace EParkingOOAD.Controllers
                 if(temp.VlasnikId == v.ID)
                 {
                     vlasnik = v;
+                    
                     mail.From = new MailAddress("eparking2020@gmail.com");
                     //return RedirectToAction("Account", "Vlasnik", v);
                     //return RedirectToAction("EMail");

@@ -71,6 +71,11 @@ namespace EParkingOOAD.Controllers
 
         public IActionResult Account(string username, string password)
         {
+            if(username == null && password == null)
+            {
+                username = EParkingFacade.Vlasnik.Username;
+                password = EParkingFacade.Vlasnik.Password;
+            }
             List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
             List<Zahtjev> odgovarajuci = new List<Zahtjev>();
             foreach (var v in vlasnici)
@@ -91,6 +96,12 @@ namespace EParkingOOAD.Controllers
                 }
             }
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            EParkingFacade.Vlasnik = null;
+            return RedirectToAction("Login", "Eparking");
         }
 
         // GET: Vlasnik/Details/5
