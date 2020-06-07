@@ -213,6 +213,7 @@ namespace EParkingOOAD.Controllers
                 {
                     _context.Update(vlasnik);
                     await _context.SaveChangesAsync();
+                    EParkingFacade.Vlasnik = vlasnik;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -225,7 +226,7 @@ namespace EParkingOOAD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Account", "Vlasnik", vlasnik);
+                return RedirectToAction("Account", "Vlasnik", EParkingFacade.Vlasnik);
             }
             return View(vlasnik);
         }

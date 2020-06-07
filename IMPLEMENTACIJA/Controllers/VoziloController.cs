@@ -123,6 +123,7 @@ namespace EParkingOOAD.Controllers
                 { 
                     _context.Update(vozilo);
                     await _context.SaveChangesAsync();
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -140,7 +141,7 @@ namespace EParkingOOAD.Controllers
                 {
                     if(vozilo.KorisnikId == k.ID)
                     {
-                        return RedirectToAction("Account", "Clan", k); 
+                        return RedirectToAction("Account", "Clan", EParkingFacade.Clan); 
                     }
                 }
                 

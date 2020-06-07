@@ -58,7 +58,11 @@ namespace EParkingOOAD.Controllers
 
             foreach(var c in clanovi)
             {
-                brojClanova++;
+                if(c.StatusClanarine == StatusClanarine.ACTIVE)
+                {
+                    brojClanova++;
+                }
+                
             }
 
             List<Administrator> administratori = _context.Administrator.ToList();
@@ -157,6 +161,7 @@ namespace EParkingOOAD.Controllers
                 {
                     _context.Update(administrator);
                     await _context.SaveChangesAsync();
+                    EParkingFacade.Administrator = administrator;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
