@@ -58,7 +58,11 @@ namespace EParkingOOAD.Controllers
 
             foreach(var c in clanovi)
             {
-                brojClanova++;
+                if(c.StatusClanarine == StatusClanarine.ACTIVE)
+                {
+                    brojClanova++;
+                }
+                
             }
 
             List<Administrator> administratori = _context.Administrator.ToList();
