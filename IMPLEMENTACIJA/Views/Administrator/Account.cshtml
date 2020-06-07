@@ -187,9 +187,9 @@
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <input id="btnAdmin" type="button" value="Vlasnik" onclick="location.href='@Url.Action("Index", "Vlasnik")'" class="btn btn-secondary btn-lg" />
-                        <input id="btnAdmin" type="button" value="Clan" onclick="location.href='@Url.Action("Index", "Clan")'" class="btn btn-secondary btn-lg" />
+                        <input id="btnAdmin" type="button" value="Clan" onclick="location.href='@Url.Action("Index", "Član")'" class="btn btn-secondary btn-lg" />
                         <input id="btnAdmin" type="button" value="Parking lokacija" onclick="location.href='@Url.Action("Index", "ParkingLokacija")'" class="btn btn-secondary btn-lg" />
-                        <input id="btnAdmin" type="button" value="Cjenovnik" onclick="location.href='@Url.Action("Index", "Cjenovnik")'" class="btn btn-secondary btn-lg" />
+                        
                     </div>
 
                 </nav>
@@ -200,70 +200,81 @@
                         <h1 id="naslov" class="h2">Dobrodošli @EParkingFacade.Administrator.Username!</h1>
                     </div>
                     <div id="mjestoZaView" class="container emp-profile">
-                        <div class="col-md-4">
-                            <div class="profile-img">
-
-                                <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
-                                <h5>
-                                    @EParkingFacade.Administrator.Username
-                                </h5>
-                                
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="profile-head">
-                                <h3>
-                                    
-                                </h3>
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-
-
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Administrator</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Uredi profil" />
-                        </div>
-                        <div class="row">
+                        <form method="get" form asp-action="Edit" asp-route-id="@EParkingFacade.Administrator.ID">
                             <div class="col-md-4">
-                                <div class="profile-work">
+                                <div class="profile-img">
+
+                                    <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="" />
+                                    <h5>
+                                        @EParkingFacade.Administrator.Username
+                                    </h5>
+
 
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
-                                <div class="tab-content profile-tab" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <h5>
-                                            Username: @EParkingFacade.Administrator.Username
-                                        </h5>
-                                        <h5>
-                                            Password: @EParkingFacade.Administrator.Password
-                                        </h5>
-                                    </div>
-                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="col-md-6">
+                                <div class="profile-head">
+                                    <h3>
+                                    </h3>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+
+
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Administrator</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pregled</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Uredi profil" />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="profile-work">
                                         
                                     </div>
-                                    
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="tab-content profile-tab" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            <h5>
+                                                Username: @EParkingFacade.Administrator.Username
+                                            </h5>
+                                            <h5>
+                                                Password: @EParkingFacade.Administrator.Password
+                                            </h5>
+                                        </div>
+                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                            <h5>
+                                                Ukupno parkinga: @ViewBag.Parkinzi
+                                            </h5>
+                                            <h5>
+                                                Ukupno vlasnika: @ViewBag.Vlasnici
+                                            </h5>
+                                            <h5>
+                                                Ukupno članova: @ViewBag.Clanovi
+                                            </h5>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+
+                        </form>
                     </div>
+
                 </main>
 
 

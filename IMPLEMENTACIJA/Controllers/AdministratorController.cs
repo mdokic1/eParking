@@ -34,12 +34,46 @@ namespace EParkingOOAD.Controllers
 
         public IActionResult Account(string username, string password)
         {
-            /*Administrator administrator = await _context.Administrator.FindAsync(1);
-            if(administrator.Username == username && administrator.Password == password)
+
+            if (username == null && password == null)
             {
-                return View(administrator);
-            }*/
+                username = EParkingFacade.Administrator.Username;
+                password = EParkingFacade.Administrator.Password;
+            }
+            List<Vlasnik> vlasnici = _context.Vlasnik.ToList();
+            List<ParkingLokacija> parkinzi = _context.ParkingLokacija.ToList();
+            List<Clan> clanovi = _context.Clan.ToList();
+            int brojVlasnika = 0;
+            int brojParkinga = 0;
+            int brojClanova = 0;
+            foreach(var v in vlasnici)
+            {
+                brojVlasnika++;
+            }
+
+            foreach(var p in parkinzi)
+            {
+                brojParkinga++;
+            }
+
+            foreach(var c in clanovi)
+            {
+                brojClanova++;
+            }
+
+            List<Administrator> administratori = _context.Administrator.ToList();
+            foreach(var a in administratori)
+            {
+                if(a.Username == username && a.Password == password)
+                {
+                    ViewBag.Vlasnici = brojVlasnika;
+                    ViewBag.Parkinzi = brojParkinga;
+                    ViewBag.Clanovi = brojClanova;
+                    return View(a);
+                }
+            }
             return View();
+            
         }
 
         public IActionResult Logout()

@@ -263,6 +263,7 @@ namespace EParking.Controllers
             List<Administrator> administratori = _context.Administrator.ToList();
             List<Vozilo> vozila = _context.Vozilo.ToList();
             bool pronadjeno = false;
+            bool postoji = false;
             
             foreach(var k in korisnici)
             {
@@ -298,7 +299,7 @@ namespace EParking.Controllers
                 {
                     pronadjeno = true;
                     EParkingFacade.Administrator = a;
-                    return RedirectToAction("Account", "Administrator");
+                    return RedirectToAction("Account", "Administrator", a);
                 }
             }
             return View();

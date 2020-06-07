@@ -9,7 +9,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Registracija</div>
+                        <div class="card-header">Registracija parking lokacije</div>
                         <div class="card-body">
 
                             <form asp-action="Create">
@@ -41,15 +41,11 @@
                                     <span asp-validation-for="Kapacitet" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="CjenovnikId" class="control-label"></label>
-                                    <select asp-for="CjenovnikId" class="form-control" asp-items="ViewBag.CjenovnikId"></select>
-                                </div>
-                                <div class="form-group">
                                     <label asp-for="VlasnikId" class="control-label"></label>
                                     <select asp-for="VlasnikId" class="form-control" asp-items="ViewBag.VlasnikId"></select>
                                 </div>
                                 <div class="row justify-content-center">
-                                    <input type="submit" value="Potvrdi" class="btn btn-primary" />
+                                    <input type="submit" value="Potvrdi" class="btn btn-secondary" />
                                 </div>
                             </form>
                         </div>

@@ -126,7 +126,7 @@ namespace EParkingOOAD.Controllers
 
             }
             ViewData["RezervisanoParkingMjesto"] = new SelectList(_context.ParkingLokacija, "ID", "Naziv", clan.RezervisanoParkingMjesto);
-            
+                        
             return View(clan);
         }
 

@@ -48,7 +48,7 @@ namespace EParkingOOAD.Controllers
         // GET: ParkingLokacija/Create
         public IActionResult Create()
         {
-            ViewData["CjenovnikId"] = new SelectList(_context.Cjenovnik, "ID", "Naziv");
+            //ViewData["CjenovnikId"] = new SelectList(_context.Cjenovnik, "ID", "Naziv");
             ViewData["VlasnikId"] = new SelectList(_context.Vlasnik, "ID", "ImePrezime");
             return View();
         }
@@ -62,6 +62,8 @@ namespace EParkingOOAD.Controllers
         {
             if (ModelState.IsValid)
             {
+                Cjenovnik cj = Newtonsoft.Json.JsonConvert.DeserializeObject<Cjenovnik>((string)TempData["cjenovnik"]);
+                parkingLokacija.CjenovnikId = cj.ID;
                 parkingLokacija.BrojSlobodnihMjesta = parkingLokacija.Kapacitet;
                 _context.Add(parkingLokacija);
                 await _context.SaveChangesAsync();
